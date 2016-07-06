@@ -3,7 +3,7 @@
 class Admin_SessionController extends Zend_Controller_Action
 {
     public function indexAction() {
-        
+        //provera da li je korisnik
        if (Zend_Auth::getInstance()->hasIdentity()) {
             //ulogovan je
             
@@ -69,12 +69,12 @@ class Admin_SessionController extends Zend_Controller_Action
              $result = $auth->authenticate($authAdapter);
              
              if ($result->isValid()) {
-                 //smestanje kompletnog reda iz tabbele cms_users kao identifikator da je korisnik ulogovan 
+                 //smestanje kompletnog reda iz tabele cms_users kao identifikator da je korisnik ulogovan 
                  //po default u se smesta samo username a ovako smestamo asocijativni niz tj row iz tabele
                  //Asocijativni niz user ima kljuceve koji su u stvari nazivi kolona u tabeli cms_users
-                 $user = $authAdapter->getResultRowObject();
+                 $user = (array) $authAdapter->getResultRowObject();//
                  
-                 $auth->getStorage()->write($user);
+                 $auth->getStorage()->write($user);//ceo red smo smestili u sesiju
                  
                  
                  

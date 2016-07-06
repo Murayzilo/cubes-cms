@@ -1,23 +1,16 @@
 <?php
 
-$this->headTitle('Members - New Member');
-
+$this->headTitle('Members - Edit Member');
 
 $form = $this->form;
 $form->setElementDecorators(array('ViewHelper'));
 
-
 ?>
 
 <div class="page-header">
-  <h1>Members - <small>New Member</small></h1>
+  <h1>Members - <small>Edit Member</small></h1>
 </div>
 
-<div class='row'>
-    <div class='col-lg-12'>
-           <?php echo $this->systemMessagesHtml($this->systemMessages);?>
-    </div>
-</div>
 
 <div class='row'>
     <div class='col-lg-12'>
@@ -37,11 +30,11 @@ $form->setElementDecorators(array('ViewHelper'));
             <div class="panel-body">
 
                 <form class="form-horizontal" method='post' action=''>
-                    <input type='hidden' name='task' value='save'>
+                    <input type='hidden' name='task' value='update'>
                     <fieldset>
 
                         <!-- Form Name -->
-                        <legend>New Member</legend>
+                        <legend>Edit Member - <?php echo $this->escape($this->member['first_name'] . ' ' . $this->member['last_name']);?></legend>
 
                         <!-- Text input-->
                         <div class="form-group">
@@ -140,7 +133,7 @@ $form->setElementDecorators(array('ViewHelper'));
                                 ));
                                 ?>
 
-                                <span class="help-block">ex "senior web developer"</span>  
+                                <span class="help-block">ex. "senior web developer"</span>  
                             </div>                            
                             <div class="col-md-4">
                                 <?php if ($form->getElement('work_title')->hasErrors()) { ?>
@@ -196,5 +189,6 @@ $form->setElementDecorators(array('ViewHelper'));
 </div>
         
 </div>
+
 
 
