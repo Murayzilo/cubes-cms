@@ -43,11 +43,11 @@ class Application_Model_DbTable_CmsMembers extends Zend_Db_Table_Abstract {
         return $id;
     }
     
-      public function deleteMember($member) {
+      public function deleteMember($id) {
        //fetch order number of new member
         
         
-       $this->delete('id' . $id);
+       $this->delete('id = ' . $id);
 
     }
     

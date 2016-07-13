@@ -196,11 +196,11 @@ $this->headTitle('Members');
             $('#delete-warning-dialog').find('[name="id"]').val(memberId);
             $('#delete-warning-dialog').modal('show');
             
-            
+         });    
             
             //disable
             
-             $('#rows-table').on('click','[data-action="disable"]', function(e){
+        $('#rows-table').on('click','[data-action="disable"]', function(e){
             
             e.preventDefault();
             e.stopPropagation();
@@ -219,10 +219,10 @@ $this->headTitle('Members');
             $('#disable-warning-dialog').find('[name="id"]').val(memberId);
             $('#disable-warning-dialog').modal('show');
             
-            
+         });    
             //enable
             
-            $('#rows-table').on('click','[data-action="enable"]', function(e){
+        $('#rows-table').on('click','[data-action="enable"]', function(e){
             
             e.preventDefault();
             e.stopPropagation();
