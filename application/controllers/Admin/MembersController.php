@@ -140,8 +140,8 @@ public function addAction() {
                 
                 //Radimo update postojeceg zapisa u tabeli
 
-                $cmsMembersTable->update($formData, 'id = ' . $member['id']);
-                
+                //$cmsMembersTable->update($formData, 'id = ' . $member['id']);
+                 $cmsMembersTable->updateMember($member['id'], $formData);
 
                 //set system message
                 $flashMessenger->addMessage('Member has been updated', 'success');

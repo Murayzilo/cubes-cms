@@ -1,3 +1,7 @@
+<?php
+//dohvatamo iz sesije ko je ulogovan
+$user = Zend_Auth::getInstance()->getIdentity();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,6 +81,9 @@
                         </li>
                         <li>
                             <a href="<?php echo $this->url(array('controller'=>'admin_members'), 'default', true) ?>"><i class="fa fa-table fa-fw"></i> Members</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller'=>'admin_services'), "default", true); ?>"><i class="glyphicon glyphicon-tasks"></i> Services</a>
                         </li>
                     </ul>
                 </div>

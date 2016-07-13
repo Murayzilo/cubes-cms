@@ -4,33 +4,30 @@ class Admin_SessionController extends Zend_Controller_Action
 {
     public function indexAction() {
         //provera da li je korisnik
-       if (Zend_Auth::getInstance()->hasIdentity()) {
-            //ulogovan je
-            
-            
-           //redirect na admin dashboard controller i index akciju
+        if (Zend_Auth::getInstance()->hasIdentity()){
+           //ulogovan je 
+            //redirect na admin_dashboard kontroler i index akciju
+            $redirector = $this->getHelper('Redirector');
+            $redirector instanceof Zend_Controller_Action_Helper_Redirector;
+            $redirector->setExit(true)
+                    ->gotoRoute(array(
+                        'controller' => 'admin_dashboard',
+                        'action' => 'login'
+                            ), 'default', true);
+        }else {
+           //nije ulogovan
            
-           
-    } else {
-        //nije ulogovan
-    }
-                
-          //redirect na login stranu      
-         $redirector = $this->getHelper('Redirector');
+           //redirect na login stranu
+           $redirector = $this->getHelper('Redirector');
+            $redirector instanceof Zend_Controller_Action_Helper_Redirector;
+            $redirector->setExit(true)
+                    ->gotoRoute(array(
+                        'controller' => 'admin_session',
+                        'action' => 'login'
+                            ), 'default', true);
+        }
         
-        $redirector instanceof Zend_Controller_Action_Helper_Redirector;
         
-        $redirector->setExit(true)
-                ->gotoRoute(array(
-                    
-                    'controller'=>'admin_session',
-                    'action'=> 'login',
-             
-                ),'default', true);
-                
-        //redirect ako nemamo dodatne parametre
-        $redirector->setExit(true)
-                ->gotoSimple('login', 'admin_session');
         
     }
     public function loginAction() {

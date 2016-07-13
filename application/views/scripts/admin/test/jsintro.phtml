@@ -1,0 +1,160 @@
+
+<div class="page-header">
+  <h1>JavaScript 1</h1>
+</div>
+<script>
+    <?php 
+    $this->inlineScript()->captureStart();
+    ?>
+         //definisanje promenljivih
+         var ime = 'Ime1';
+         var starost = 30;
+         
+        //definisanje funkcije
+         //alert(ime);
+         
+         //definisanje niza
+         var polaznici = ['Aleksandar Stevanovic', 'Natasa Lukic', 'Aleksandra Petkovic'];
+         //foreach petlja tj for in vadi samo index i pomocu njega se vadi vrednost niza
+         for(var index in polaznici){
+             //console.log(index + ': ' + polaznici[index]);
+             
+         }
+         //console.log(polaznici);
+         
+         
+         //pristupanje clanovima niza
+        // alert(polaznici[1]);
+         
+         //definisanje objekta
+         var polaznik = {
+             'ime':'Ime1',
+             'prezime':'Prezime1',
+             'starost':30
+         };
+         
+         for(var key in polaznik){
+            // console.log(key + '->' + polaznik[key]);
+            
+         }
+         //alert(polaznik.prezime);
+         
+         //JSON - Java Script Object Notation
+         
+         var cubes = {
+             name:'Cubes d.o.o.',
+             address:'Culevar Mihajla Pupina 181',
+             courses:[
+                 {
+                     name:'PHP',
+                     students:{
+                         php01:'Aleksandar Stevanovic',
+                         php02:'Natasa Lukic',
+                         php03:'Aleksandra Petkovic'
+                     }
+                 },
+                 {
+                     name:'iOS',
+                     students:{
+                         ios01:'IOS 1',
+                         ios02:'IOS 2',
+                         ios03:'IOS 3'
+                     }
+                 }
+             ]
+         }
+         //console.log(cubes);
+         //pristupanje clanovima niza kad ima vise nizova
+        // alert(cubes.courses[0].students.php03);
+         //isto kao da smo pisali alert(cubes['courses'][0]['students']['php02']);
+         
+         var doubleTestNumber=77;
+         
+         function testF(testNumber) {
+           var doubleTestNumber = testNumber * 2;
+             
+           //console.log('Calling function testF' + doubleTestNumber + '!');
+         };
+         
+         
+         
+         
+         //pozivanje funkcije
+         
+         testF(1);
+         testF(2);
+         testF(3);
+         testF(4);
+         testF(5);
+         
+         //console.log('Double test number is: ' + doubleTestNumber);
+         
+         
+         //drugi nacin definisanja funkcija u js
+         var testF2 = function(){
+           console.log('Calling testF2');  
+         };
+         testF2();
+        
+        
+        //Object constructor
+        function Polaznik(ime, prezime, starost){
+            
+            this.ime = ime;
+            this.prezime=prezime;
+            this.starost=starost;
+            
+            this.predstaviSe = function(){
+              return 'Ja sam ' + this.ime + ' ' + this.prezime + ' i imam ' + this.starost + ' god.'  
+            };
+        };
+        
+        var p1 = new Polaznik('Ime1', 'Prezime1', 11);
+        var p2 = new Polaznik('Ime2', 'Prezime2', 22);        
+        var p3 = new Polaznik('Ime3', 'Prezime3', 33);
+        var p4 = new Polaznik('Ime4', 'Prezime4', 44);
+        
+        p4.getime = function(){
+          return this.ime;  
+        };
+        
+        
+        console.log(p1.predstaviSe());
+        console.log(p2.predstaviSe());
+        console.log(p3.predstaviSe());
+        console.log(p4.predstaviSe());
+        
+        //master objekat
+        window;
+        
+        //working with computer screen
+        window.screen;
+        screen;
+        
+        
+        //working with browser window location (address bar)
+        window.location;
+        location;
+        
+        
+        //execute function after 5000 miliseconds
+        /*setTimeout(function() {
+          location.href = "http://www.google.com/";//preusmeravanje   
+        }, 5000);*/
+        
+        //DOM
+        window.document;
+        document;
+        
+        <?php $this->inlineScript()->captureEnd(); ?>
+</script>
+
+<!--   php //$testF = function($testNumber){
+//    echo $testNumber;
+//};
+//
+//$testF();
+//
+//
+        
+  //  } php-->
