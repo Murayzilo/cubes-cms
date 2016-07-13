@@ -4,7 +4,7 @@ class Application_Form_Admin_MemberAdd extends Zend_Form
 {
     public function init() {
        
-        $firstName = new Zend_form_Element_Text('first_name');
+        $firstName = new Zend_Form_Element_Text('first_name');
         //$firstName->addFilter(new Zend_Filter_StringTrim);
         //$firstName->addValidator(new Zend_Validate_StringLenght(array('min'=> 3, 'max'=> 255)));
         //
@@ -16,14 +16,14 @@ class Application_Form_Admin_MemberAdd extends Zend_Form
         
         $this->addElement($firstName);
         //last name
-        $lastName = new Zend_form_Element_Text('last_name');
+        $lastName = new Zend_Form_Element_Text('last_name');
         $lastName->addFilter('StringTrim')
                 ->addValidator('StringLength', false, array('min'=> 3, 'max'=> 255))
                 ->setRequired(true);
         
         $this->addElement($lastName);
         //work title
-        $workTitle = new Zend_form_Element_Text('work_title');
+        $workTitle = new Zend_Form_Element_Text('work_title');
 
         $workTitle->addFilter('StringTrim')
                 ->addValidator('StringLength', false, array('min'=> 3, 'max'=> 255))
@@ -32,7 +32,7 @@ class Application_Form_Admin_MemberAdd extends Zend_Form
         $this->addElement($workTitle);
         
         //email
-        $email = new Zend_form_Element_Text('email');
+        $email = new Zend_Form_Element_Text('email');
 
         $email->addFilter('StringTrim')
                 ->addValidator('EmailAddress', false, array('domain' => false))
