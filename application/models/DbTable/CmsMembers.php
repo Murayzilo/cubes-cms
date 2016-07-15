@@ -68,7 +68,7 @@ class Application_Model_DbTable_CmsMembers extends Zend_Db_Table_Abstract {
         
        $this->update(array(
            'status' => self::STATUS_ENABLED
-       ), 'id=' . $id);
+       ), 'id= ' . $id);
 
     }
     

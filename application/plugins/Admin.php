@@ -3,7 +3,7 @@
 class Application_Plugin_Admin extends Zend_Controller_Plugin_Abstract
 {
     public function routeShutdown(Zend_Controller_Request_Abstract $request) {
-        
+        //dobijamo controller koji je pozvan i akciju koja je pozvana
         $controllerName = $request->getControllerName();
         
         $actionName = $request->getActionName();
@@ -20,7 +20,7 @@ class Application_Plugin_Admin extends Zend_Controller_Plugin_Abstract
                   
                   $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
                   $flashMessenger->addMessage('You must login','errors');
-                 
+                  //dobijamo redirector van kontrolera
                   $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('Redirector');
                   
                   $redirector->setExit(true)

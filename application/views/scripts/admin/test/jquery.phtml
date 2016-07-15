@@ -144,7 +144,8 @@
   
 <script>
 <?php $this->inlineScript()->captureStart();?>
-    
+        //ova f-ja vraca jquery objekat, svaki element koji ima table tag
+    //i dodaje table
 //    
 //    var testTable = $('#test-table');
 //    
@@ -164,12 +165,12 @@
 //    
 //    testTable.find('tbody').append(firstRowClone);
 
-
+//f-ja on dodaje event handling
 $('#ulepsaj-tabelu-btn').on('click',function(e){
     $('#test-table').addClass('table table-striped table-hover');
 });
     
-    
+    //selektor po atributu
     $('[data-action="add-row"]').on('click',function(e) {
        var lastRowClone = $('#test-table tbody tr:last').clone(); 
        
@@ -186,7 +187,7 @@ $('#ulepsaj-tabelu-btn').on('click',function(e){
         
         alert('Browser is prevented to go to url:' + url);
         
-    })
+    });
     
 //       $('[data-action="delete-row"]').on('click', function(e){
 //           

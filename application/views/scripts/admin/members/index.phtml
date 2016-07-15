@@ -226,6 +226,7 @@ $this->headTitle('Members');
             
             e.preventDefault();
             e.stopPropagation();
+            
             //calculate target element
             var target = $(this).is('[data-action="enable"]') ? $(this) : $(this).closest('[data-action="enable"]');
             

@@ -3,7 +3,7 @@
 class Admin_SessionController extends Zend_Controller_Action
 {
     public function indexAction() {
-        //provera da li je korisnik
+        //provera da li je korisnik ulogovan
         if (Zend_Auth::getInstance()->hasIdentity()){
            //ulogovan je 
             //redirect na admin_dashboard kontroler i index akciju
@@ -12,7 +12,7 @@ class Admin_SessionController extends Zend_Controller_Action
             $redirector->setExit(true)
                     ->gotoRoute(array(
                         'controller' => 'admin_dashboard',
-                        'action' => 'login'
+                        'action' => 'index'
                             ), 'default', true);
         }else {
            //nije ulogovan

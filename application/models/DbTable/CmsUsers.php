@@ -4,7 +4,7 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 0;
     
-    protected $_name = 'cms_users';
+    protected $_name = 'cms_users';//podesavanje imena tabele
     
     /**
      * @param iny $id
@@ -33,7 +33,7 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
     
     public function updateUser($id, $user){
         if(isset($user['id'])){
-            //forbid changing of user id
+            //forbid changing of user id (izbegavamo da se promeni id usera, brise se iz niza ukoliko je setovan)
             unset($user['id']);
         }
         
@@ -48,7 +48,7 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
      */
     public function changeUserPassword($id, $newPassword)
     {
-        //update "password" column, set md5 value bof new password, for user with id = $id
+        //update "password" column, set md5 value of new password, for user with id = $id
         $this->update(array('password'=> md5($newPassword)), 'id = ' . $id);
     }
     

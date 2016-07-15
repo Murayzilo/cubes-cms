@@ -91,7 +91,7 @@ class Admin_MembersController extends Zend_Controller_Action {
 
         $request = $this->getRequest();
 
-        $id - (int) $request->getParam('id');
+        $id = (int) $request->getParam('id');
 
         if ($id <= 0) {
 

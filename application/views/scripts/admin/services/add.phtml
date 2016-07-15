@@ -17,7 +17,7 @@ $form->setElementDecorators(array('ViewHelper'));
             <div class="panel-heading text-right">
                 <div class="btn-group" role="group" aria-label="...">
                     <a 
-                        href='<?php echo $this->url(array('controller' => 'admin_services', 'action' => 'index'), 'default', true) ?>' 
+                        href="<?php echo $this->url(array('controller' => 'admin_services', 'action' => 'index'), 'default', true); ?>" 
                         class="btn btn-default"
                         ><i class="glyphicon glyphicon-arrow-left"></i>Back to all services</a>
 
@@ -86,7 +86,7 @@ $form->setElementDecorators(array('ViewHelper'));
                                 echo $form->getElement('description')->setAttribs(array(
                                     'class' => 'form-control',
                                     'id' => 'description',
-                                    'rows' => 6
+                                    'rows' => 12
                                 ));
                                 ?>
                             </div>

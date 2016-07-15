@@ -3,6 +3,7 @@
   <h1>JavaScript 1</h1>
 </div>
 <script>
+    // smestanje JS-a na dno
     <?php 
     $this->inlineScript()->captureStart();
     ?>
@@ -47,7 +48,7 @@
              courses:[
                  {
                      name:'PHP',
-                     students:{
+                     students:{ //kljuc mora biti jedinstven, a string kako zelimo
                          php01:'Aleksandar Stevanovic',
                          php02:'Natasa Lukic',
                          php03:'Aleksandra Petkovic'
@@ -90,7 +91,7 @@
          //console.log('Double test number is: ' + doubleTestNumber);
          
          
-         //drugi nacin definisanja funkcija u js
+         //drugi nacin definisanja funkcija u js //anonimna f-ja  nemaju ime samo dodeljuju tip podatka
          var testF2 = function(){
            console.log('Calling testF2');  
          };
@@ -99,7 +100,7 @@
         
         //Object constructor
         function Polaznik(ime, prezime, starost){
-            
+            //u moje ime stavi argument koji je naveden iz function Polaznik(ime) tako i za ostale ispod
             this.ime = ime;
             this.prezime=prezime;
             this.starost=starost;
@@ -114,7 +115,7 @@
         var p3 = new Polaznik('Ime3', 'Prezime3', 33);
         var p4 = new Polaznik('Ime4', 'Prezime4', 44);
         
-        p4.getime = function(){
+        p4.getName = function(){ //pisaoo getime
           return this.ime;  
         };
         
