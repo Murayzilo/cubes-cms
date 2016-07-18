@@ -37,6 +37,22 @@ class Application_Model_DbTable_CmsMembers extends Zend_Db_Table_Abstract {
     public function insertMember($member) {
        //fetch order number of new member
         
+
+          //trazimo query builder
+          $select = $this->select();
+          //Sort rows by order_number DESCENDING and fetch one row from the top
+          $select->order('order_number DESC');
+            //      ->limit(1); ILI na drugi nacin
+           $this->fetchRow($select);
+           
+           $memberWithBiggestOrderNumber = $this->fetchRow($select);
+          
+           if ($memberWithBiggestOrderNumber instanceof Zend_Db_Table_Row) {        // implementira interface array accessable, mozemo da pristupamo kao u nizu   
+               $member['order_number'] = $memberWithBiggestOrderNumber['order_number'] + 1;
+        } else {
+          //table was empty, we are insertinf first member
+          $member['order_number'] = 1;
+        }
         
         $id = $this->insert($member);
         
@@ -44,34 +60,41 @@ class Application_Model_DbTable_CmsMembers extends Zend_Db_Table_Abstract {
     }
     
       public function deleteMember($id) {
-      
-        $select = $this->select();
-        $select->where('id =?', $id);
-        $row = $this->fetchRow($select);
-        if ($row instanceof Zend_Db_Table_Row) {
-            $row->toArray();
-        } else {
-            return null;
-        }
-        //dobijamo order number od ID-ja koji se brise
-        $orderDeleted = $row['order_number'];
-        // print_r($orderDeleted);
-        $select = $this->select();
-        $select->where('order_number > ?', $orderDeleted);
-        //dobijamo sve kolone koje zadovoljavaju uslov
-        $rows = $this->fetchAll($select);
-        // print_r($rows);
-        if (empty($rows)) {
-            return FALSE;
-        } else {
-            $rowsData = $rows->toArray();
-        }
-
-        foreach ($rowsData as $row) {
-            $this->update(array(
-                'order_number' => $row['order_number'] - 1
-                    ), 'id= ' . $row['id']);
-        }
+              
+          $member = $this->getMemberById($id);
+          
+          $this->update(array(
+             'order_number' => new Zend_Db_Expr('order_number - 1')
+          ), 
+                  'order_number >'  . $member['order_number']);
+           
+//        $select = $this->select();
+//        $select->where('id =?', $id);
+//        $row = $this->fetchRow($select);
+//        if ($row instanceof Zend_Db_Table_Row) {
+//            $row->toArray();
+//        } else {
+//            return null;
+//        }
+//        //dobijamo order number od ID-ja koji se brise
+//        $orderDeleted = $row['order_number'];
+//        // print_r($orderDeleted);
+//        $select = $this->select();
+//        $select->where('order_number > ?', $orderDeleted);
+//        //dobijamo sve kolone koje zadovoljavaju uslov
+//        $rows = $this->fetchAll($select);
+//        // print_r($rows);
+//        if (empty($rows)) {
+//            return FALSE;
+//        } else {
+//            $rowsData = $rows->toArray();
+//        }
+//
+//        foreach ($rowsData as $row) {
+//            $this->update(array(
+//                'order_number' => $row['order_number'] - 1
+//                    ), 'id= ' . $row['id']);
+//        }
           
        $this->delete('id = ' . $id);
 

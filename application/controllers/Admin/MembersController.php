@@ -46,7 +46,6 @@ class Admin_MembersController extends Zend_Controller_Action {
         $systemMessages = array(
             'success' => $flashMessenger->getMessages('success'),
             'errors' => $flashMessenger->getMessages('errors'),
-            'info' => $flashMessenger->getMessages('errors'),
         );
 
         if ($request->isPost() && $request->getPost('task') === 'save') {
@@ -61,13 +60,56 @@ class Admin_MembersController extends Zend_Controller_Action {
                 //get form data
                 $formData = $form->getValues();
 
+                //remove key member_photo  form data because there is no column member_photo in cms_members 
+                unset($formData['member_photo']);
+
                 //Insertujemo novi zapis u tabelu
                 $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
-                $cmsMembersTable->insert($formData);
+
+                // insert member returns ID of the new member
+                $memberId = $cmsMembersTable->insertMember($formData);
+
+
+                if ($form->getElement('member_photo')->isUploaded()) {
+
+                    // photo is uploaded 
+                    $fileInfos = $form->getElement('member_photo')->getFileInfo('member_photo');
+                    $fileInfo = $fileInfos['member_photo']; // ILI NA OVAJ NACIN $fileInfos =$_FILES['member_photo']
+
+                    try {
+                        // open uploaded photo in temporary directory
+                        $memberPhoto = Intervention\Image\ImageManagerStatic::make($fileInfo['tmp_name']);
+
+                        $memberPhoto->fit(150, 150);
+
+                        //snimanje slike , mesto gde ce se slika sacuvati
+                        $memberPhoto->save(PUBLIC_PATH . '/uploads/members/' . $memberId . '.jpg');
+                    } catch (Exception $ex) {
+
+                        //set system message
+                        $flashMessenger->addMessage('Member has been saved but error occured during image processing', 'errors');
+                        // $flashMessenger->addMessage('Or maybe somethign is wrong', 'errors');
+                        //redirect to same or another page
+                        $redirector = $this->getHelper('Redirector');
+                        $redirector->setExit(true)
+                                ->gotoRoute(array(
+                                    'controller' => 'admin_members',
+                                    'action' => 'edit',
+                                    'id' => $memberId,
+                                        ), 'default', true);
+                    }
+
+
+
+                    //print_r($fileInfo);
+                    //die();
+                }
+
 
                 //die(print_r($formData, true));
                 //do actual task
                 //save to database etc
+                //
                 //set system message
                 $flashMessenger->addMessage('Member has been saved', 'success');
                 // $flashMessenger->addMessage('Or maybe somethign is wrong', 'errors');
@@ -95,7 +137,7 @@ class Admin_MembersController extends Zend_Controller_Action {
 
         if ($id <= 0) {
             //prekida se izvrsavanje i prikazuje se "page not found"
-            throw new Zend_Controller_Router_Exception('Invalid member id:' . $id, 404); 
+            throw new Zend_Controller_Router_Exception('Invalid member id:' . $id, 404);
         }
 
         $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
@@ -133,7 +175,35 @@ class Admin_MembersController extends Zend_Controller_Action {
                 //get form data
                 $formData = $form->getValues();
 
+                //remove key member_photo  form data because there is no column member_photo in cms_members 
+                unset($formData['member_photo']);
                 //Radimo update postojeceg zapisa u tabeli
+
+                if ($form->getElement('member_photo')->isUploaded()) {
+
+                    // photo is uploaded 
+                    $fileInfos = $form->getElement('member_photo')->getFileInfo('member_photo');
+                    $fileInfo = $fileInfos['member_photo']; // ILI NA OVAJ NACIN $fileInfos =$_FILES['member_photo']
+
+                    try {
+                        // open uploaded photo in temporary directory
+                        $memberPhoto = Intervention\Image\ImageManagerStatic::make($fileInfo['tmp_name']);
+
+                        $memberPhoto->fit(150, 150);
+
+                        //snimanje slike , mesto gde ce se slika sacuvati
+                        $memberPhoto->save(PUBLIC_PATH . '/uploads/members/' . $member['id'] . '.jpg');
+                    } catch (Exception $ex) {
+
+                        throw new Application_Model_Exception_InvalidInput('Error occured during image processing: ' . $ex->getMessage());
+                    }
+
+
+
+                    //print_r($fileInfo);
+                    //die();
+                }
+
 
                 //$cmsMembersTable->update($formData, 'id = ' . $member['id']);
                 $cmsMembersTable->updateMember($member['id'], $formData);
@@ -207,7 +277,6 @@ class Admin_MembersController extends Zend_Controller_Action {
                         'controller' => 'admin_members',
                         'action' => 'index',
                             ), 'default', true);
-            
         } catch (Application_Model_Exception_InvalidInput $ex) {
 
             $flashMessenger->addMessage($ex->getMessage(), 'errors');
@@ -344,66 +413,64 @@ class Admin_MembersController extends Zend_Controller_Action {
 
     public function updateorderAction() {
 
-            $request = $this->getRequest();
+        $request = $this->getRequest();
 
-            if (!$request->isPost() || $request->getPost('task') != 'saveOrder') {
-                    // request is not post
-                    // or task is not saveOrder
-                    //redirect to index page
+        if (!$request->isPost() || $request->getPost('task') != 'saveOrder') {
+            // request is not post
+            // or task is not saveOrder
+            //redirect to index page
+            //redirect to same or another page
+            $redirector = $this->getHelper('Redirector');
+            $redirector->setExit(true)
+                    ->gotoRoute(array(
+                        'controller' => 'admin_members',
+                        'action' => 'index'
+                            ), 'default', true);
+        }
 
-                    //redirect to same or another page
-                    $redirector = $this->getHelper('Redirector');
-                    $redirector->setExit(true)
-                            ->gotoRoute(array(
-                                    'controller' => 'admin_members',
-                                    'action' => 'index'
-                                    ), 'default', true);
+        $flashMessenger = $this->getHelper('FlashMessenger');
+
+        try {
+
+            $sortedIds = $request->getPost('sorted_ids');
+
+            if (empty($sortedIds)) {
+                throw new Application_Model_Exception_InvalidInput('Sorted ids are not sent');
             }
 
-            $flashMessenger = $this->getHelper('FlashMessenger');
+            $sortedIds = trim($sortedIds, ' ,');
 
-            try {
-
-                    $sortedIds = $request->getPost('sorted_ids');
-
-                    if (empty($sortedIds)) {
-                            throw new Application_Model_Exception_InvalidInput('Sorted ids are not sent');
-                    }
-
-                    $sortedIds = trim($sortedIds, ' ,');
-
-                    if (!preg_match('/^[0-9]+(,[0-9]+)*$/', $sortedIds)) {
-                            throw new Application_Model_Exception_InvalidInput('Invalid sorted ids: ' . $sortedIds);
-                    }
-
-                    $sortedIds = explode(',', $sortedIds);
-
-                    $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
-
-                    $cmsMembersTable->updateOrderOfMembers($sortedIds);
-
-                    $flashMessenger->addMessage('Order is successfully saved', 'success');
-
-                    //redirect to same or another page
-                    $redirector = $this->getHelper('Redirector');
-                    $redirector->setExit(true)
-                            ->gotoRoute(array(
-                                    'controller' => 'admin_members',
-                                    'action' => 'index'
-                                    ), 'default', true);
-
-            } catch (Application_Model_Exception_InvalidInput $ex) {
-
-                    $flashMessenger->addMessage($ex->getMessage(), 'errors');
-
-                    //redirect to same or another page
-                    $redirector = $this->getHelper('Redirector');
-                    $redirector->setExit(true)
-                            ->gotoRoute(array(
-                                    'controller' => 'admin_members',
-                                    'action' => 'index'
-                                    ), 'default', true);
+            if (!preg_match('/^[0-9]+(,[0-9]+)*$/', $sortedIds)) {
+                throw new Application_Model_Exception_InvalidInput('Invalid sorted ids: ' . $sortedIds);
             }
+
+            $sortedIds = explode(',', $sortedIds);
+
+            $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
+
+            $cmsMembersTable->updateOrderOfMembers($sortedIds);
+
+            $flashMessenger->addMessage('Order is successfully saved', 'success');
+
+            //redirect to same or another page
+            $redirector = $this->getHelper('Redirector');
+            $redirector->setExit(true)
+                    ->gotoRoute(array(
+                        'controller' => 'admin_members',
+                        'action' => 'index'
+                            ), 'default', true);
+        } catch (Application_Model_Exception_InvalidInput $ex) {
+
+            $flashMessenger->addMessage($ex->getMessage(), 'errors');
+
+            //redirect to same or another page
+            $redirector = $this->getHelper('Redirector');
+            $redirector->setExit(true)
+                    ->gotoRoute(array(
+                        'controller' => 'admin_members',
+                        'action' => 'index'
+                            ), 'default', true);
+        }
     }
-    
+
 }

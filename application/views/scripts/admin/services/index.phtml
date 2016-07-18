@@ -29,6 +29,7 @@ $this->headTitle('Services');
                 <table id="rows-table" class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th></th>
                             <th class="text-center">Icon</th>
                             <th class="text-center">Status</th>
                             <th>Title</th>
@@ -42,8 +43,8 @@ $this->headTitle('Services');
                             if ($service['status'] == Application_Model_DbTable_CmsServices::STATUS_DISABLED) {
                                 ?>
                                 <tr data-service-id="<?php echo $this->escape($service['id']);?>"  class="danger">
-                                    <td class="text-center"><i data-action="sort" class="<?php echo $this->escape($service['icon']); ?>  icon-small icon-inverse-80 _icon-circle"></i></td>
-                                    <td class="text-center"><span><i class="<?php echo $this->escape($service['icon']); ?>"></i></span></td>
+                                    <td class="text-center"><i data-action="sort" class="glyphicon glyphicon-list"  style="display: none; cursor: pointer;"></i></td>
+                                    <td class="text-center"><i class="<?php echo $this->escape($service['icon']); ?> icon-small icon-inverse-80 _icon-circle"></i></td>
                                     <td class="text-center"><span class="badge alert-danger" title="disabled"><i class="glyphicon glyphicon-remove"></i></span></td>
                                     <td><?php echo $this->escape($service['title']); ?></td>
                                     <td><?php echo $this->escape($service['description']); ?></td>
