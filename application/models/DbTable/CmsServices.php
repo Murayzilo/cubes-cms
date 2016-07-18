@@ -76,4 +76,17 @@ class Application_Model_DbTable_CmsServices extends Zend_Db_Table_Abstract {
        ), 'id=' . $id);
 
     }
+    
+     /**
+     * 
+     * @param nt $id ID of service to sort
+     */
+        public function updateOrderOfServices($sortedIds) {
+        foreach ($sortedIds as $orderNumber => $id) {
+            $this->update(array(
+                'order_number' => $orderNumber + 1 // +1 because it starts from 0
+                    ), 'id = ' . $id);
+        }
+    }
+
 }
