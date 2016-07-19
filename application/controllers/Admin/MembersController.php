@@ -255,7 +255,7 @@ class Admin_MembersController extends Zend_Controller_Action {
 
             if ($id <= 0) {
 
-                throw new Application_Model_Exception_InvalidInput('Invalid member id:' . $id);
+                throw new Application_Model_Exception_InvalidInput('Invalid member id:' . $id , 'errors');
             }
 
             $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
@@ -263,7 +263,7 @@ class Admin_MembersController extends Zend_Controller_Action {
             $member = $cmsMembersTable->getMemberById($id);
 
             if (empty($member)) {
-                throw new Application_Model_Exception_InvalidInput('No member is found with id' . $id);
+                throw new Application_Model_Exception_InvalidInput('No member is found with id' . $id , 'errors');
             }
 
 
@@ -316,7 +316,7 @@ class Admin_MembersController extends Zend_Controller_Action {
 
             if ($id <= 0) {
 
-                throw new Application_Model_Exception_InvalidInput('Invalid member id:' . $id);
+                throw new Application_Model_Exception_InvalidInput('Invalid member id:' . $id , 'errors');
             }
 
             $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
@@ -324,7 +324,7 @@ class Admin_MembersController extends Zend_Controller_Action {
             $member = $cmsMembersTable->getMemberById($id);
 
             if (empty($member)) {
-                throw new Application_Model_Exception_InvalidInput('No member is found with id' . $id);
+                throw new Application_Model_Exception_InvalidInput('No member is found with id' . $id , 'errors');
             }
 
 
@@ -377,7 +377,7 @@ class Admin_MembersController extends Zend_Controller_Action {
 
             if ($id <= 0) {
 
-                throw new Application_Model_Exception_InvalidInput('Invalid member id:' . $id);
+                throw new Application_Model_Exception_InvalidInput('Invalid member id:' . $id , 'errors');
             }
 
             $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
@@ -385,7 +385,7 @@ class Admin_MembersController extends Zend_Controller_Action {
             $member = $cmsMembersTable->getMemberById($id);
 
             if (empty($member)) {
-                throw new Application_Model_Exception_InvalidInput('No member is found with id' . $id);
+                throw new Application_Model_Exception_InvalidInput('No member is found with id' . $id , 'errors');
             }
 
             $cmsMembersTable->disableMember($id);

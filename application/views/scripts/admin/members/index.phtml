@@ -38,6 +38,7 @@ $this->headTitle('Members');
       				<table id="rows-table" class='table table-striped table-hover'>
 					<thead>
 						<tr>
+                                                        <th></th>
 							<th class="text-center">Img</th>
 							<th class="text-center">Status</th>
 							<th>First Name</th>
@@ -72,6 +73,7 @@ $this->headTitle('Members');
                                                                     <a 
                                                                         href="<?php echo $this->url(array('controller'=>'admin_members', 'action'=>'edit', 'id'=> $member['id']), 'default', true);?>"
                                                                         type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                                        
 									<button data-memberId="<?php echo $this->escape($member['id']); ?>" data-action="enable" type="button" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
                                                                         <button data-memberId="<?php echo $this->escape($member['id']); ?>" data-action="delete" type="button" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
 								</div>
@@ -115,6 +117,7 @@ $this->headTitle('Members');
 						?>
 					</tbody>
 				</table>
+                    </div>
             </div>
     </div>
 </div>
@@ -159,7 +162,7 @@ $this->headTitle('Members');
   </div><!-- /.modal-dialog -->
 </form><!-- /.modal -->
 
-<form method="post" action="<?php echo $this->url(array('controller'=>'admin_members', 'action'=>'enable'),'default',true);?>" id="disable-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
+<form method="post" action="<?php echo $this->url(array('controller'=>'admin_members', 'action'=>'enable'),'default',true);?>" id="enable-warning-dialog" class="modal fade" tabindex="-1" role="dialog">
         <input type="hidden" name="task" value="enable">
         <input type="hidden" name="id" value="">
         <div class="modal-dialog">
@@ -201,11 +204,11 @@ $this->headTitle('Members');
             var target = $(this).is('[data-action="delete"]') ? $(this) : $(this).closest('[data-action="delete"]');
             
             
-            //get any attribute
-            var memberId = target.attr('data-memberId');
+            //get any attribute preko attr funkcije
+            //var memberId = target.attr('data-memberId');// pise se pun naziv data-member-id
             
             //get data attributes
-            //var memberId = target.data('memberId');
+            var memberId = target.data('member-id');// naziv se pise bez prefiksa DATA
             
             //alert(memberId);
             //.val() sluzi za dodeljivanje vrednosti poljima u formi
@@ -225,14 +228,14 @@ $this->headTitle('Members');
             
             
             //get any attribute
-            var memberId = target.attr('data-memberId');
+            var memberId = target.attr('data-member-id');
             
             //get data attributes
-            //var memberId = target.data('memberId');
+            //var memberId = target.data('member-id');
             
             //alert(memberId);
             //.val() sluzi za dodeljivanje vrednosti poljima u formi
-            $('#disable-warning-dialog').find('[name="id"]').val(memberId);
+            $('#disable-warning-dialog').find('[name="id"]').val(memberId);//set value for input field with name "id"
             $('#disable-warning-dialog').modal('show');
             
          });    
@@ -248,7 +251,7 @@ $this->headTitle('Members');
             
             
             //get any attribute
-            var memberId = target.attr('data-memberId');
+            var memberId = target.attr('data-member-id');
             
             //get data attributes
             //var memberId = target.data('memberId');
@@ -259,6 +262,7 @@ $this->headTitle('Members');
             $('#enable-warning-dialog').modal('show');
             
         });
+        
         // Sorting
             $('[data-action="toggle-sort"]').on('click', function(e) {
 
@@ -299,7 +303,8 @@ $this->headTitle('Members');
 
                     //initialize sortable functionallity
                     sortableTbody.sortable({
-                            handle: '[data-action="sort"]'
+                            
+                        handle: '[data-action="sort"]'
                     });
 
                     //show "handle" for sorting, the icon in first column
@@ -316,7 +321,8 @@ $this->headTitle('Members');
             e.stopPropagation();
 
             var memberSortedIds = $('#rows-table > tbody').sortable('toArray', {
-                    attribute: 'data-member-id'
+                    
+                attribute: 'data-member-id'
             });
 
             //select save order form

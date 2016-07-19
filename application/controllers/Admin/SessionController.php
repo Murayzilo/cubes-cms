@@ -14,6 +14,7 @@ class Admin_SessionController extends Zend_Controller_Action
                         'controller' => 'admin_dashboard',
                         'action' => 'index'
                             ), 'default', true);
+            //redirect na admin_dashboard kontroler i index akciju
         }else {
            //nije ulogovan
            
@@ -67,9 +68,9 @@ class Admin_SessionController extends Zend_Controller_Action
              
              if ($result->isValid()) {
                  //smestanje kompletnog reda iz tabele cms_users kao identifikator da je korisnik ulogovan 
-                 //po default u se smesta samo username a ovako smestamo asocijativni niz tj row iz tabele
-                 //Asocijativni niz user ima kljuceve koji su u stvari nazivi kolona u tabeli cms_users
-                 $user = (array) $authAdapter->getResultRowObject();//
+                 //po default-u se smesta samo username, a ovako smestamo asocijativni niz tj row iz tabele
+                 //Asocijativni niz $user ima kljuceve koji su u stvari nazivi kolona u tabeli cms_users
+                 $user = (array) $authAdapter->getResultRowObject();
                  
                  $auth->getStorage()->write($user);//ceo red smo smestili u sesiju
                  

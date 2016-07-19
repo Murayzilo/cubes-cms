@@ -190,7 +190,7 @@ $this->headTitle('Services');
         //calculate target element
         var target = $(this).is('[data-action="delete"]') ? $(this) : $(this).closest('[data-action="delete"]');
         
-        var serviceId = target.attr('data-serviceId');
+        var serviceId = target.attr('data-service-id');
         
         $('#delete-warning-dialog').find('[name="id"]').val(serviceId);
        
@@ -210,7 +210,7 @@ $('#rows-table').on('click', '[data-action="disable"]', function(e){
         //calculate target element
         var target = $(this).is('[data-action="disable"]') ? $(this) : $(this).closest('[data-action="disable"]');
         
-        var serviceId = target.attr('data-serviceId');
+        var serviceId = target.attr('data-service-id');
      
         $('#disable-warning-dialog').find('[name="id"]').val(serviceId);
        
@@ -228,14 +228,13 @@ $('#rows-table').on('click', '[data-action="disable"]', function(e){
         //calculate target element
         var target = $(this).is('[data-action="enable"]') ? $(this) : $(this).closest('[data-action="enable"]');
         
-        var serviceId = target.attr('data-serviceId');
+        var serviceId = target.attr('data-service-id');
       
         $('#enable-warning-dialog').find('[name="id"]').val(serviceId);
        
         $('#enable-warning-dialog').modal('show');
         
-         var serviceData = target.attr('data-serviceName');
-        $('.service').text(serviceData);
+
     });
     
     //Sorting
