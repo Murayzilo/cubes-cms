@@ -1,0 +1,53 @@
+<?php
+
+class Application_Form_Admin_UserAdd extends Zend_Form
+{
+    public function init() {
+        
+        //user name
+        $username = new Zend_Form_Element_Text('username');
+        $username->addFilter('StringTrim')
+                ->addValidator('StringLength', false, array('min'=> 5, 'max'=> 50))
+                ->addValidator(new Zend_Validate_Db_NoRecordExists(
+                        array(
+                    'table' => 'cms_users',
+                    'field' => 'username'
+                )))
+                ->setRequired(true);
+        
+        $this->addElement($username);
+       
+        $firstName = new Zend_Form_Element_Text('first_name');
+        //$firstName->addFilter(new Zend_Filter_StringTrim);
+        //$firstName->addValidator(new Zend_Validate_StringLenght(array('min'=> 3, 'max'=> 255)));
+        //
+  
+        //first name
+        $firstName->addFilter('StringTrim')
+                ->addValidator('StringLength', false, array('min'=> 3, 'max'=> 255))
+                ->setRequired(false);
+        
+        $this->addElement($firstName);
+        
+        //last name
+        $lastName = new Zend_Form_Element_Text('last_name');
+        $lastName->addFilter('StringTrim')
+                ->addValidator('StringLength', false, array('min'=> 3, 'max'=> 255))
+                ->setRequired(false);
+        
+        $this->addElement($lastName);
+        
+        //email
+        $email = new Zend_Form_Element_Text('email');
+
+        $email->addFilter('StringTrim')
+                ->addValidator('EmailAddress', false, array('domain' => false))
+                ->setRequired(false);
+        
+        $this->addElement($email);
+
+    }
+
+    
+    
+}

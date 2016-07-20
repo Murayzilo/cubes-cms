@@ -330,7 +330,7 @@ class Admin_MembersController extends Zend_Controller_Action {
 
             $cmsMembersTable->enableMember($id);
 
-            $flashMessenger->addMessage('Member ' . $member['first_name'] . ' ' . $member['last_name'] . 'has been enabled', 'success');
+            $flashMessenger->addMessage('Member ' . $member['first_name'] . ' ' . $member['last_name'] . ' has been enabled', 'success');
             //redirect to same or another page
             $redirector = $this->getHelper('Redirector');
             $redirector->setExit(true)
@@ -390,7 +390,7 @@ class Admin_MembersController extends Zend_Controller_Action {
 
             $cmsMembersTable->disableMember($id);
 
-            $flashMessenger->addMessage('Member ' . $member['first_name'] . ' ' . $member['last_name'] . 'has been disabled', 'success');
+            $flashMessenger->addMessage('Member ' . $member['first_name'] . ' ' . $member['last_name'] . ' has been disabled', 'success');
             //redirect to same or another page
             $redirector = $this->getHelper('Redirector');
             $redirector->setExit(true)
