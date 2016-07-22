@@ -69,4 +69,47 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
         $this->update(array('password'=> md5($newPassword)), 'id = ' . $id);
     }
     
+      /**
+     * 
+     * @param int $id Id of the user to delete
+     */
+    public function deleteUser($id){
+        
+        //user who is going to be deleted
+        $user = $this->getUserById($id);
+        
+        $this->update(array(
+            'order_number' => new Zend_Db_Expr('order_number -1')  
+        ), 
+            'order_number > ' . $user['order_number']);
+        
+        $this->delete('id = ' . $id);
+    }
+    
+    
+    /**
+     * 
+     * @param int $id ID of user to disable
+     */
+    public function disableUser($id) {
+        $this->update(array(
+            'status' => self::STATUS_DISABLED
+                ), 'id = ' . $id);
+    }
+    /**
+     * 
+     * @param int $id ID of user to enable
+     */
+    public function enableUser($id) {
+        $this->update(array(
+            'status' => self::STATUS_ENABLED
+                ), 'id = ' . $id);
+    }
+    
+    public function resetpasswordUser($id) {
+        $this->update(array(
+            'password' => md5(self::DEFAULT_PASSWORD),
+                ), 'id = ' . $id);
+    }
+    
     }
