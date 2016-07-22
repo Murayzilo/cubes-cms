@@ -11,7 +11,7 @@ class Admin_ServicesController extends Zend_Controller_Action
 			'errors' => $flashMessenger->getMessages('errors')
 		);
 		
-		// prikaz svih memeber-a
+		// prikaz svih servisa-a
 		
 		$cmsServicesDbTable = new Application_Model_DbTable_CmsServices();
 		
