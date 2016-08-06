@@ -1,0 +1,109 @@
+<?php //mozemo i u kontroleru disable-ovati
+Zend_Layout::getMvcInstance()->disableLayout();
+?>
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+	<h1>Choose your car brand/model</h1>
+	<form action="" method="post">
+		<p>
+		<label>Brand</label>
+		<select id="car-brand">
+			<option value="">--- Choose Brand ---</option>
+                        
+                        
+                        
+		</select>
+		</p>
+		<p>
+		<label>Model</label>
+		<select id="car-model">
+			<option value="">--- Choose Model ---</option>
+		</select>
+		</p>
+	</form>
+<!--        ucitavamo jquerry biblioteku-->
+        <script src="<?php echo $this->baseUrl('/admin/bower_components/jquery/dist/jquery.min.js');?>"></script>
+        <script>
+           
+           $('#car-brand').on('change', function(e){
+               
+               //e.preventDefault();
+               e.stopPropagation();
+               
+               var target = $(this).is('#car-brand') ? $(this) : $(this).closest('#car-brand');
+               
+               var brand = target.val();
+               
+               var modelSelect = $('#car-model');
+               //clean elements in html
+               modelSelect.empty();
+               modelSelect.append('<option value="">--- Choose Model ---</option>');
+               
+              if(brand) {
+                $.ajax({
+                    url: '<?php echo $this->url( array('controller' => 'admin_test', 'action' => 'ajaxmodels'), 'default', TRUE);?>',
+                    //data je kljuc koji je objekat, prosledjivanje parametara koje prosledjujemo na url:
+                   //data je prazan po default-u
+                    data: { 
+                        brand: brand
+                    },
+                    method: 'get', // po default-u je get ako se ne navede
+                    cache: false
+                   
+           
+                }).done(function(data) {
+                    for(var index in data) {
+                        var model = data[index];
+                       
+                        var selectOption = $('<option></option>');
+                        selectOption.attr('value', model.value);
+                        //selectOption.html(model.label);
+                        selectOption.text(model.label);//interpretira se kao tekst, umesto html f-je, ne prepoznaje tagove
+                        modelSelect.append(selectOption);
+                    }
+                       
+                }).fail(function() {
+                    alert('Unable to load models for brand!');
+                }).always({
+                   
+                });
+            }
+           });
+            //$.ajax('test.html', {});
+            
+            $.ajax({
+                url: '<?php echo $this->url(array('controller'=> 'admin_test', 'action'=>'ajaxbrands'), 'default', TRUE);?>',
+                cache:false
+            }).done(function(data, textStatus, jqXHR) { //promise metode ,  on succesfull ajax page load
+                // niz objekata pod odredjenim indeksom
+                for(var index in data){//uspesno ucitana stranica ; data argument je ono sto smo dobili sa servera html
+                    
+                    var brand = data[index]; // objekat brand sa kljucevima value i label
+                    
+                    var selectOption = $('<option></option>');
+                    
+                    selectOption.attr('value', brand.value);
+                    selectOption.html (brand.label); //html f-ja setuje sve sto je izmedju slektovanog taga <option>.
+                    
+                    $('#car-brand').append(selectOption);
+                }
+                
+                //$('#car-brand').append(data);
+              
+                
+            }) //.done on successfull ajax page load  
+            //text status je hhtp status 404 not found, 200 OK i slicno
+            //slanje AJAX zahteva SAM AJAX ZAHTEV jqXHR
+            .fail(function( jqXHR, textStatus, errorThrown ) {
+                  //on error while loading ajax page
+                alert('Error occured while loading car brands');
+            })
+            .always(function(){
+                  //  for action that do not depend on result
+            });
+            
+        </script>
+</body>
+</html>

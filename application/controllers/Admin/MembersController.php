@@ -17,16 +17,16 @@ class Admin_MembersController extends Zend_Controller_Action {
 
         $cmsMembersDbTable = new Application_Model_DbTable_CmsMembers();
 
-        // $select je objekat klase Zend_Db_Select
-        $select = $cmsMembersDbTable->select();
-
-        $select->order('order_number');
-
-
-        //debug za db select - vraca se sql upit
-        //die($select->assemble());
-
-        $members = $cmsMembersDbTable->fetchAll($select);
+ 	$members = $cmsMembersDbTable->search(array(
+			//'filters' => array(
+			//	'status' => Application_Model_DbTable_CmsMembers::STATUS_ENABLED
+			//),
+			'orders' => array(
+				'order_number' => 'ASC'
+			),
+			//'limit' => 4,
+			//'page' => 2
+		));
 
         $this->view->members = $members; //prosledjivanje rezultata
         $this->view->systemMessages = $systemMessages;
@@ -248,16 +248,14 @@ class Admin_MembersController extends Zend_Controller_Action {
 
         $flashMessenger = $this->getHelper('FlashMessenger');
 
-
         try {
+            //(int) sve sto nije integer pretvara se u nulu
             //read $_POST['id']
             $id = (int) $request->getPost('id');
-
             if ($id <= 0) {
 
                 throw new Application_Model_Exception_InvalidInput('Invalid member id:' . $id , 'errors');
             }
-
             $cmsMembersTable = new Application_Model_DbTable_CmsMembers();
 
             $member = $cmsMembersTable->getMemberById($id);
@@ -472,5 +470,20 @@ class Admin_MembersController extends Zend_Controller_Action {
                             ), 'default', true);
         }
     }
+    
+     public function dashboardAction() {
+        
+        $cmsMembersDbTable = new Application_Model_DbTable_CmsMembers();
+		
+		$totalNumberOfMembers = $cmsMembersDbTable->count();
+		$activeMembers = $cmsMembersDbTable->count(array(
+			'status' => Application_Model_DbTable_CmsMembers::STATUS_ENABLED
+		));
+                
+        $this->view->totalNumberOfMembers = $totalNumberOfMembers;        
+        $this->view->activeMembers = $activeMembers;
+        
+
+	}
 
 }

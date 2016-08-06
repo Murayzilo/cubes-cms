@@ -9,7 +9,7 @@ class Application_Plugin_Admin extends Zend_Controller_Plugin_Abstract {
         $actionName = $request->getActionName();
 
         if (preg_match('/^admin_/', $controllerName)) {
-
+            //potrebno je ulogovati se da bi dosao do admin dela
             Zend_Layout::getMvcInstance()->setLayout('admin');
             //provera da li korisnik nije ulogovan
             if (

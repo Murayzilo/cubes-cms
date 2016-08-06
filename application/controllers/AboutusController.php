@@ -40,7 +40,7 @@ class AboutusController extends Zend_Controller_Action
       //rezultat ove funkcije konvertuje u integer
       //filtriranje
       $id = trim($id);
-      $id = (int) $id; // $id (int_val)  
+      $id = (int) $id; // $id = intval($id);)  
 
         if(empty($id)){
            throw new Zend_Controller_Router_Exception('No member id', 404) ;
@@ -60,6 +60,17 @@ class AboutusController extends Zend_Controller_Action
         }
         
         $member = $foundMembers[0];
+		
+        /*$memberSlug = $request->getParam('member_slug');
+        if (empty($memberSlug)) {
+                $redirector = $this->getHelper('Redirector');
+                $redirector->setExit(true)
+                        ->gotoRoute(array(
+                                'id' => $member['id'],
+                                'member_slug' => $member['first_name'] . '-' . $member['last_name']
+                        ), 'member-route', true);
+
+        }*/
         
         //Fetching all other members
         $select = $cmsMembersDbTable->select();

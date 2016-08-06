@@ -76,7 +76,7 @@ $this->headTitle('Services');
                                     <td class="text-center">
                                         <div class="btn-group btn-group-sm" role="group" aria-label="...">
                                             <a 
-                                                href="<?php echo $this->url(array('controller' => 'services', 'action' => 'service', 'id' => $service['id']), 'default', true); ?>"
+                                                href="<?php echo $this->url(array('controller' => 'services', 'action' => 'index', 'id' => $service['id']), 'default', true); ?>"
                                                 target="_blank"
                                                 type="button" class="btn btn-default" title="preview"><i class="glyphicon glyphicon-eye-open"></i></a>
                                             <a 
@@ -92,8 +92,6 @@ $this->headTitle('Services');
                                     <?php
                             }
                             ?> 
-
-
                                 <?php
                             }
                             ?>
@@ -181,7 +179,7 @@ $this->headTitle('Services');
 
 <script>
 <?php $this->inlineScript()->captureStart();?> 
-    
+    //delete
        $('#rows-table').on('click', '[data-action="delete"]', function(e){
         e.preventDefault();
         e.stopPropagation();
@@ -201,7 +199,7 @@ $this->headTitle('Services');
      
     });
     
-       
+  // disable     
 $('#rows-table').on('click', '[data-action="disable"]', function(e){
         e.preventDefault();
         e.stopPropagation();

@@ -36,7 +36,7 @@ $this->headTitle('Users');
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						<?php /*
 						foreach ($this->users as $user) {
 							if ($user['status'] == Application_Model_DbTable_CmsUsers::STATUS_DISABLED) {
 							?>
@@ -87,7 +87,7 @@ $this->headTitle('Users');
 						
 							<?php
 						}
-						?>
+						*/?>
 						
 					</tbody>
 				</table>
@@ -110,7 +110,7 @@ $this->headTitle('Users');
         <h4 class="modal-title">Delete user</h4>
       </div>
       <div class="modal-body">
-          <p>Are you sure you want to delete user ? <span class="osoba" class="btn btn-tumblr"></span></p>
+          <p>Are you sure you want to delete user ? <span class="client" class="btn btn-tumblr"></span></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -131,7 +131,7 @@ $this->headTitle('Users');
         <h4 class="modal-title">Disable user</h4>
       </div>
       <div class="modal-body">
-          <p>Are you sure you want to disable user ?<span class="osoba" class="btn btn-tumblr"></span></p>
+          <p>Are you sure you want to disable user ?<span class="client" class="btn btn-tumblr"></span></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -152,7 +152,7 @@ $this->headTitle('Users');
         <h4 class="modal-title">Enable user</h4>
       </div>
       <div class="modal-body">
-          <p>Are you sure you want to enable user ?<span class="osoba" class="btn btn-tumblr"></span></p>
+          <p>Are you sure you want to enable user ?<span class="client" class="btn btn-tumblr"></span></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -173,7 +173,7 @@ $this->headTitle('Users');
         <h4 class="modal-title">Reset Password</h4>
       </div>
       <div class="modal-body">
-          <p>Are you sure you want to reset password for  user ?<span class="osoba" class="btn btn-tumblr"></span></p>
+          <p>Are you sure you want to reset password for  user ?<span class="client" class="btn btn-tumblr"></span></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -182,6 +182,20 @@ $this->headTitle('Users');
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </form><!-- /.modal -->
+
+<div style="display: none">
+
+    <div data-container="message-box-success" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <span data-container="message-text"></span>
+</div>
+
+<div data-container="message-box-error" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <span data-container="message-text"></span> 
+</div>
+</div>
+
 
   <?php  
 
@@ -282,9 +296,185 @@ $this->headTitle('Users');
            order: [
                [2,'asc']
            ],
-           lengthMenu: [3,5,10,20,50,100]
-       });
+           lengthMenu: [10,20,50,100],
+            serverSide: true,
+            processing: true,
+            ajax: '<?php echo $this->url(array('controller' => 'admin_users', 'action'=> 'datatable'),'default', true);?>',
+        });
     
+      //presretanje submita 
+      // Disable
+     $('#disable-warning-dialog').on('submit', function(e) {
+         
+        e.preventDefault();//stop manual form submit
+        
+        var target = $(this).is('#disable-warning-dialog') ? $(this) : $(this).closest('#disable-warning-dialog');
+        
+        $.ajax({
+            url: '<?php echo $this->url(array('controller' => 'admin_users', 'action'=> 'disable'),'default', true);?>',
+            method: 'post',
+            data: {
+                task: 'disable',
+                id: target.find('[name="id"]').val()
+            }
+                   
+            
+        }).done(function(data){  //u data se nalazi json
+            
+            if (data['status'] == 'ok'){
+                var messageBox =$('[data-container="message-box-success"]').last().clone(true);//klonirali smo oznaceni div
+                messageBox.find('[data-container="message-text"]').text(data['statusMessage']);
+                
+                $('#system-messages-container').append(messageBox);
+            }else{
+                 var messageBox =$('[data-container="message-box-error"]').last().clone(true);//klonirali smo oznaceni div
+                messageBox.find('[data-container="message-text"]').text(data['statusMessage']);
+                //$('#system-messages-container').empty(); ako zelimo da se zatvori prethodna poruka za user-a
+                $('#system-messages-container').append(messageBox);
+                
+            }
+            
+        }).fail(function(){//da li je doslo do greske u komunikaciji sa serverom
+            //error in communication with server
+            alert('Error: Server return error');
+            
+        }).always(function(){//bilo da se ajax izvrs uspesno ili ne treba da se zatvori
+            target.modal('hide');//modal je plug in od jquery-ja
+            //refresh table keep selected page
+            $('#rows-table').dataTable().draw(false);//refresh stranice gde smo //ako izostavimo false vraca nas na pocetnu stranu
+        });
+        
+     });
+     
+     
+     //ENABLE
+      $('#enable-warning-dialog').on('submit', function(e) {
+         
+        e.preventDefault();//stop manual submit
+        
+        var target = $(this).is('#enable-warning-dialog') ? $(this) : $(this).closest('#enable-warning-dialog');
+        
+        $.ajax({
+            url: '<?php echo $this->url(array('controller' => 'admin_users', 'action'=> 'enable'),'default', true);?>',
+            method: 'post',
+            data: {
+                task: 'enable',
+                id: target.find('[name="id"]').val()
+            }
+                   
+            
+        }).done(function(data){
+            
+            if (data['status'] == 'ok'){
+                var messageBox =$('[data-container="message-box-success"]').last().clone(true);//klonirali smo oznaceni div
+                messageBox.find('[data-container="message-text"]').text(data['statusMessage']);
+                
+                $('#system-messages-container').append(messageBox);
+            }else{
+                 var messageBox =$('[data-container="message-box-error"]').last().clone(true);//klonirali smo oznaceni div
+                messageBox.find('[data-container="message-text"]').text(data['statusMessage']);
+                //$('#system-messages-container').empty(); ako zelimo da se zatvori prethodna poruka za usera
+                $('#system-messages-container').append(messageBox);
+                
+            }
+            
+        }).fail(function(){//da li je doslo do greske u komunikaciji sa serverom
+            //error in communication with server
+            alert('Error: Server return error');
+            
+        }).always(function(){//bilo da se ajax izvrs uspesno ili ne treba da se zatvori
+            target.modal('hide');//modal je plug in od jquery-ja
+            //refresh table keep selected page
+            $('#rows-table').dataTable().draw(false);//refresh stranice gde smo //ako izostavimo false vraca nas na pocetnu stranu
+        });
+        
+     });
+     
+     // Delete
+      $('#delete-warning-dialog').on('submit', function(e) {
+         
+        e.preventDefault();//stop manual submit
+        
+        var target = $(this).is('#delete-warning-dialog') ? $(this) : $(this).closest('#delete-warning-dialog');
+        
+        $.ajax({
+            url: '<?php echo $this->url(array('controller' => 'admin_users', 'action'=> 'delete'),'default', true);?>',
+            method: 'post',
+            data: {
+                task: 'delete',
+                id: target.find('[name="id"]').val()
+            }
+                   
+            
+        }).done(function(data){
+            
+            if (data['status'] == 'ok'){
+                var messageBox =$('[data-container="message-box-success"]').last().clone(true);//klonirali smo oznaceni div
+                messageBox.find('[data-container="message-text"]').text(data['statusMessage']);
+                
+                $('#system-messages-container').append(messageBox);
+            }else{
+                 var messageBox =$('[data-container="message-box-error"]').last().clone(true);//klonirali smo oznaceni div
+                messageBox.find('[data-container="message-text"]').text(data['statusMessage']);
+                //$('#system-messages-container').empty(); ako zelimo da se zatvori prethodna poruka za usera
+                $('#system-messages-container').append(messageBox);
+                
+            }
+            
+        }).fail(function(){//da li je doslo do greske u komunikaciji sa serverom
+            //error in communication with server
+            alert('Error: Server return error');
+            
+        }).always(function(){//bilo da se ajax izvrs uspesno ili ne treba da se zatvori
+            target.modal('hide');//modal je plug in od jquery-ja
+            //refresh table keep selected page
+            $('#rows-table').dataTable().draw(false);//refresh stranice gde smo //ako izostavimo false vraca nas na pocetnu stranu
+        });
+        
+     });
+     
+        // Reset password
+        $('#resetpassword-warning-dialog').on('submit', function(e) {
+         
+        e.preventDefault();//stop manual submit
+        
+        var target = $(this).is('#resetpassword-warning-dialog') ? $(this) : $(this).closest('#resetpassword-warning-dialog');
+        
+        $.ajax({
+            url: '<?php echo $this->url(array('controller' => 'admin_users', 'action'=> 'resetpassword'),'default', true);?>',
+            method: 'post',
+            data: {
+                task: 'resetpassword',
+                id: target.find('[name="id"]').val()
+            }
+                   
+            
+        }).done(function(data){
+            
+            if (data['status'] == 'ok'){
+                var messageBox =$('[data-container="message-box-success"]').last().clone(true);//klonirali smo oznaceni div
+                messageBox.find('[data-container="message-text"]').text(data['statusMessage']);
+                
+                $('#system-messages-container').append(messageBox);
+            }else{
+                 var messageBox =$('[data-container="message-box-error"]').last().clone(true);//klonirali smo oznaceni div
+                messageBox.find('[data-container="message-text"]').text(data['statusMessage']);
+                //$('#system-messages-container').empty(); ako zelimo da se zatvori prethodna poruka za usera
+                $('#system-messages-container').append(messageBox);
+                
+            }
+            
+        }).fail(function(){//da li je doslo do greske u komunikaciji sa serverom
+            //error in communication with server
+            alert('Error: Server return error');
+            
+        }).always(function(){//bilo da se ajax izvrs uspesno ili ne treba da se zatvori
+            target.modal('hide');//modal je plug in od jquery-ja
+            //refresh table keep selected page
+            $('#rows-table').dataTable().draw(false);//refresh stranice gde smo //ako izostavimo false vraca nas na pocetnu stranu
+        });
+        
+     });
      
     <?php $this->inlineScript()->captureEnd();?> 
 </script>

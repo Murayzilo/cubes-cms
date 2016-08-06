@@ -122,7 +122,7 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
      *          'limit' => 50, // limit result set to 50 rows
      *           'page' => 3, // start from page 3, if no limit is set , page is ignored 
      *      )
-     * @param array $parameters Associative array waith keys "filters", "orders", "limit" and "page"
+     * @param array $parameters Associative array with keys "filters", "orders", "limit" and "page"
      */
     public function search(array $parameters = array()) {
         
@@ -187,14 +187,13 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
     public function count(array $filters = array()) {
         
         $select = $this->select();
-        
-        
+
         $this->processFilters($filters, $select);
         
         //reset previously set columns for result
         $select->reset('columns');
         //set one column field to fetch and it is COUNT function
-        $select->column('COUNT');
+        $select->from($this->_name, 'COUNT(*) as total');
         
         $row = $this->fetchRow($select);// radi selekt upita, i tom redu bice samo jedna kolona total
         
@@ -259,7 +258,7 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
                     $select->where('email LIKE ?', '%' . $value . '%');
                     break;
                 
-                case 'id_exclude':  
+                case 'id_exclude':  // pod ovim kljucem dobijamo zapise koji nemaju trazeni id
                     if (is_array($value)) {
                         $select->where('id NOT in (?)', $value);
                     }else{
@@ -279,4 +278,35 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
             }
     }
     
+    /**
+     * 
+     * @param array $users
+     * @return int number of active services
+     */
+      public function activeUsers($users) {
+
+        $activeUsers = 0;
+        foreach ($users as $user) {
+            if ($user['status'] == self::STATUS_ENABLED) {
+                $activeUsers ++;
+            }
+        }
+        return $activeUsers;
+    }
+    
+    /**
+     * 
+     * @param array $users
+     * @return int total number of Users
+     */
+    public function totalUsers($users) {
+        $totalNumberOfUsers = 0;
+
+        foreach ($users as $user) {
+            $totalNumberOfUsers ++;
+        }
+
+        return $totalNumberOfUsers;
+    }
+
 }

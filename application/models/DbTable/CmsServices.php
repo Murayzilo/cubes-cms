@@ -88,5 +88,37 @@ class Application_Model_DbTable_CmsServices extends Zend_Db_Table_Abstract {
                     ), 'id = ' . $id);
         }
     }
+    
+     /**
+     * 
+     * @param array $services
+     * @return int number of active services
+     */
+    public function activeServices($services) {
+        $activeServices = 0;
+        foreach ($services as $service) {
+            if ($service['status'] == self::STATUS_ENABLED) {
+                $activeServices ++;
+            }
+        }
+        return $activeServices;
+    }
+    
+    
+    /**
+     * 
+     * @param array $services
+     * @return int total number of services
+     */
+    public function totalServices( $services) {
+        $totalNumberOfServices =0;
+        
+        foreach ($services as $service){
+            $totalNumberOfServices ++;
+        }
+        
+        
+        return $totalNumberOfServices ;
+    }
 
 }

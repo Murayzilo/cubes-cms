@@ -18,14 +18,14 @@ $user = Zend_Auth::getInstance()->getIdentity();
 
     <!-- MetisMenu CSS -->
     <link href="<?php echo $this->baseUrl('/admin/bower_components/metisMenu/dist/metisMenu.min.css'); ?>" rel="stylesheet">
-
+    <?php echo $this->headLink();?>
     <!-- Custom CSS -->
     <link href="<?php echo $this->baseUrl('/admin/dist/css/sb-admin-2.css'); ?>" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="<?php echo $this->baseUrl('/admin/bower_components/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
 
-     <?php echo $this->headLink();?>
+     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -60,7 +60,7 @@ $user = Zend_Auth::getInstance()->getIdentity();
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li> <a href="#" >Signed in as<strong> <?php echo $this->escape($user['username']); ?></strong>></a></li>
+                        <li> <a href="#" >Signed in as<strong> <?php echo $this->escape($user['username']);?></strong>></a></li>
                         <li class="divider"></li>
                         <li><a href="<?php echo $this->url(array('controller'=> 'admin_profile', 'action'=> 'edit'), 'default', true);?>"><i class="fa fa-user fa-fw"></i> Edit Profile</a>
                         </li>
@@ -89,7 +89,10 @@ $user = Zend_Auth::getInstance()->getIdentity();
                             <a href="<?php echo $this->url(array('controller' => 'admin_services',), 'default', true);?>"><i class="fa fa-cog fa-fw"></i> Services</a>
                         </li>
                         <li>
-                            <a href="<?php echo $this->url(array('controller' => 'admin_users',), 'default', true);?>"><i class="fa fa-users fa-fw"></i> Users</a>
+                            <a href="<?php echo $this->url(array('controller' => 'admin_users',), 'default', true);?>"><i class="fa fa-user fa-fw"></i> Users</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'admin_clients',), 'default', true);?>"><i class="fa fa-users fa-fw"></i> Clients</a>
                         </li>
                     </ul>
                 </div>

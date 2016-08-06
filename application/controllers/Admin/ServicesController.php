@@ -146,6 +146,54 @@ class Admin_ServicesController extends Zend_Controller_Action
 		$this->view->service = $service;
 	}
         
+         public function deleteAction() {
+        $request = $this->getRequest();
+        if (!$request->isPost() || $request->getPost('task') != 'delete') {
+            //request is not post redirect to index page
+            //or task is not delete
+            //redirect to index page
+            //redirect to same or another page
+            $redirector = $this->getHelper('Redirector');
+            $redirector->setExit(true)
+                    ->gotoRoute(array(
+                        'controller' => 'admin_services',
+                        'action' => 'index',
+                            ), 'default', true);
+        }
+        $flashMessenger = $this->getHelper('FlashMessenger');
+        try {
+            //(int) sve sto nije integer pretvara se u nulu
+            //read $_POST['id']
+            $id = (int) $request->getPost('id');
+            if ($id <= 0) {
+                
+                throw new Application_Model_Exception_InvalidInput('Invalid service id: ' . $id);
+            }
+            $cmsServicesTable = new Application_Model_DbTable_CmsServices();
+            $service = $cmsServicesTable->getServiceById($id);
+            if (empty($service)) {
+                throw new Application_Model_Exception_InvalidInput('No service is found with id: ' . $id, 'errors');
+            }
+            $cmsClientsTable->deleteService($id);
+            $flashMessenger->addMessage('Service ' . $service['first_name'] . ' ' . $service['last_name'] . 'has been deleted', 'success');
+            //redirect on another page
+            $redirector = $this->getHelper('Redirector');
+            $redirector->setExit(true)
+                    ->gotoRoute(array(
+                        'controller' => 'admin_services',
+                        'action' => 'index',
+                            ), 'default', true);
+        } catch (Application_Model_Exception_InvalidInput $ex) {
+            $flashMessenger->addMessage($ex->getMessage(), 'errors');
+            $redirector = $this->getHelper('Redirector');
+            $redirector->setExit(true)
+                    ->gotoRoute(array(
+                        'controller' => 'admin_services',
+                        'action' => 'index',
+                            ), 'default', true);
+        }
+    }
+        
         public function disableAction(){
       
          $request = $this->getRequest();
@@ -327,6 +375,26 @@ class Admin_ServicesController extends Zend_Controller_Action
                         'action' => 'index'
                             ), 'default', true);
         }
+    }
+    
+     public function dashboardAction() {
+        
+        $activeServices =0;
+        $totalNumberOfServices = 0;
+        
+        $cmsServicesDbTable = new Application_Model_DbTable_CmsServices();
+        $select = $cmsServicesDbTable->select();
+        $services = $cmsServicesDbTable->fetchAll($select);
+        
+        $activeServices = $cmsServicesDbTable->activeServices($services);
+        $totalNumberOfServices =$cmsServicesDbTable->totalServices($services);
+       
+       
+                
+        $this->view->activeServices = $activeServices;
+        $this->view->totalNumberOfServices = $totalNumberOfServices;
+        $this->view->services = $services;
+      
     }
 
 }
