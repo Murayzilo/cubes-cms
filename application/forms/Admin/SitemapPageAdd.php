@@ -25,6 +25,8 @@ class Application_Form_Admin_SitemapPageAdd extends Zend_Form
         $type->addMultiOption('', '-- Select Sitemap Page Type --')
                 ->addMultiOptions(array(
                     'StaticPage' => 'Static Page',
+                    'AboutUscPage' => 'About Us Page',
+                    'ContactPage' => 'Contact Page'
                     
                 ))->setRequired(true);
         $this->addElement($type);
@@ -32,7 +34,7 @@ class Application_Form_Admin_SitemapPageAdd extends Zend_Form
         
         $urlSlug = new Zend_Form_Element_Text('url_slug');
         $urlSlug->addFilter('StringTrim')
-                ->addFilter(new Application_Model_Filter_UrlSlug()) //posto je ovo nas custom filter moramo pvako da ga pozovemo
+                ->addFilter(new Application_Model_Filter_UrlSlug()) //posto je ovo nas custom filter poziva se na ovaj nacin
                 ->addValidator('StringLength', false, array('min' => 2, 'max' => 255))
                 ->addValidator(new Zend_Validate_Db_NoRecordExists(array(
                  'table' => 'cms_sitemap_pages',

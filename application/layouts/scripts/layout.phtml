@@ -8,8 +8,9 @@
                 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- @todo: fill with your company info or remove -->
-		<meta name="description" content="">
-		<meta name="author" content="Cubes School">
+                
+<!--                dodajemo meta tagove u head tagu uz pomoc meta helpera-->
+		 <?php echo $this->headMeta();?>  
 		<!-- Bootstrap CSS -->
 		<link href="<?php echo $this->baseUrl('/plugins/bootstrap/dist/css/bootstrap.min.css'); ?>" rel="stylesheet">
 		<!-- Font Awesome CSS -->
@@ -27,7 +28,7 @@
 		<script src="<?php echo $this->baseUrl('/plugins/html5shiv/dist/html5shiv.js'); ?>"></script>
 		<script src="<?php echo $this->baseUrl('/plugins/respond/respond.min.js'); ?>"></script>
 		<![endif]-->
-                <?php echo $this->headScript(); ?>
+                <?php echo $this->headScript();?>
                 
 		<!-- Le fav and touch icons - @todo: fill with your icons or remove -->
 		<link rel="shortcut icon" href="<?php echo $this->baseUrl('/img/favicons/96x96.png'); ?>">
@@ -71,7 +72,7 @@
 										<a href="<?php echo $this->url(array('controller'=> 'contact', 'action'=>'index'), 'contact-us-route', true); ?>">Contact</a>
 									</li>                                                                
 									<li>
-                                                                            <a href="<?php echo $this->baseUrl('/admin_session/login'); ?>"><i class="fa fa-user"></i> Login</a>
+                                                                            <a href="<?php echo $this->baseUrl('/admin_dashboard/index'); ?>"><i class="fa fa-user"></i> Login</a>
                                                                         </li> 
 								</ul>
 							</div>

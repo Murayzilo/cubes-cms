@@ -1,8 +1,57 @@
 <?php
+
 class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
+
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 0;
+
     protected $_name = 'cms_sitemap_pages';
+    // dohvata se preko statickog getera
+    protected static $sitemapPagesMap;
+
+    /**
+     * 
+     * @return array with keys as sitemap page ids and values as assoc. arrays with keys url and type
+     * 
+     */
+    public static function getSitemapPagesMap() {
+        //lasy loading, ne povlace se resursi dok ne zatrebaju
+        if (!self::$sitemapPagesMap) {
+
+            $sitemapPagesMap = array();
+
+            $cmsSitemapPagesDbTable = new self();
+            // same as
+            //         $cmsSitemapPagesDbTable = new Application_Model_DbTable_CmsSitemapPages()::
+
+            $sitemapPages = $cmsSitemapPagesDbTable->search(array(
+                'orders' => array(
+                    'parent_id' => 'ASC',
+                    'order_number' => 'ASC'
+                )
+            ));
+
+            foreach ($sitemapPages as $sitemapPage) {
+                $type = $sitemapPage['type'];
+                $url = $sitemapPage['url_slug'];
+
+                if (isset($sitemapPagesMap[$sitemapPage['parent_id']])) {
+
+                    $url = $sitemapPagesMap[$sitemapPage['parent_id']]['url'] . '/' . $url;
+                }
+
+                $sitemapPagesMap[$sitemapPage['id']] = array(
+                    'url' => $url,
+                    'type' => $type
+                );
+            }
+
+            self::$sitemapPagesMap = $sitemapPagesMap;
+        }
+
+        return self::$sitemapPagesMap;
+    }
+
     /**
      * 
      * @param int $id
@@ -19,6 +68,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
             return null;
         }
     }
+
     public function updateSitemapPage($id, $sitemapPage) {
         //izbegavamo da se promeni id usera, brise se iz niza ukoliko je setovan
         if (isset($sitemapPage['id'])) {
@@ -26,6 +76,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
         }
         $this->update($sitemapPage, 'id = ' . $id);
     }
+
     /**
      * 
      * @param array $sitemapPage
@@ -47,6 +98,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
         $id = $this->insert($sitemapPage);
         return $id;
     }
+
     /**
      * 
      * @param int $id ID of sitemapPage to delete
@@ -60,10 +112,11 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
 //
         $childSitemapPages = $this->search(array(
             'filters' => array(
-                'parent_id' => $id
+                'parent_id' => $id //ili $sitemapPage['id']
             )
         ));
         if (!empty($childSitemapPages)) {
+            //delete children pages recursively
             foreach ($childSitemapPages as $key => $childSitemapPage) {
                 // print_r($childSitemapPage['id']);
                 //    die();
@@ -74,6 +127,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
             $this->delete('id = ' . $id);
         }
     }
+
     public function updateSitemapOfOrder($sortedIds) {
         foreach ($sortedIds as $orderNumber => $id) {
             $this->update(array(
@@ -81,6 +135,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
                     ), 'id = ' . $id);
         }
     }
+
     /**
      * Array $parameters is keeping search parameters.
      * Array $parameters  must be in following format:
@@ -140,6 +195,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
         //ovde dobijamo niz sa upitom
         return $this->fetchAll($select)->toArray();
     }
+
     /**
      * 
      * @param array $filters See function search $parameters ['filters']
@@ -155,6 +211,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
         $row = $this->fetchRow($select);
         return $row['total'];
     }
+
     /**
      * Fill $select object with WHERE conditions
      * @param array $filters
@@ -201,9 +258,11 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
             }
         }
     }
+
     /*     * @param The id of sitemap page
      * @ return array Sitemap page rows in path
      */
+
     public function getSitemapPageBreadcrumbs($id) {
         $sitemapPagesBreadcrumbs = array();
         while ($id > 0) {
@@ -218,6 +277,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
         }
         return $sitemapPagesBreadcrumbs;
     }
+
     /**
      * 
      * @param nt $id ID of member to enable
@@ -227,6 +287,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
             'status' => self::STATUS_DISABLED
                 ), 'id = ' . $id);
     }
+
     /**
      * 
      * @param nt $id ID of sitemapPage to enable
@@ -236,4 +297,5 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
             'status' => self::STATUS_ENABLED
                 ), 'id = ' . $id);
     }
+
 }

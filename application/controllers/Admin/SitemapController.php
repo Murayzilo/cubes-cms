@@ -126,7 +126,7 @@ class Admin_SitemapController extends Zend_Controller_Action {
     }
     public function editAction() {
         $request = $this->getRequest();
-        $id = (int) $request->getParam('id');
+        $id = (int) $request->getParam('id'); // moze biti i POst i GET
         if ($id <= 0) {
             //prekida se izvrsavanje proograma i prikazuje se page not found
             throw new Zend_Controller_Router_Exception('Invalid sitemapPage id: ' . $id, 404);
