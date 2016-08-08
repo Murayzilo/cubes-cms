@@ -12,18 +12,9 @@ class Admin_ServicesController extends Zend_Controller_Action
 		);
 		
 		// prikaz svih servisa-a
-		
 		$cmsServicesDbTable = new Application_Model_DbTable_CmsServices();
 		
-		// $select je objekat klase Zend_Db_Select
-		$select = $cmsServicesDbTable->select();
-		
-		$select->order('order_number');
-		
-		//degug za db select - vraca se sql upit
-		//die($select->assemble());
-		
-		$services = $cmsServicesDbTable->fetchAll($select);
+                $services = $cmsServicesDbTable->search();
 		
 		$this->view->services = $services;
 		$this->view->systemMessages = $systemMessages;
@@ -379,21 +370,17 @@ class Admin_ServicesController extends Zend_Controller_Action
     
      public function dashboardAction() {
         
-        $activeServices =0;
-        $totalNumberOfServices = 0;
-        
         $cmsServicesDbTable = new Application_Model_DbTable_CmsServices();
-        $select = $cmsServicesDbTable->select();
-        $services = $cmsServicesDbTable->fetchAll($select);
-        
-        $activeServices = $cmsServicesDbTable->activeServices($services);
-        $totalNumberOfServices =$cmsServicesDbTable->totalServices($services);
+      
+        $totalNumberOfServices = $cmsServicesDbTable->count();
+        $activeServices = $cmsServicesDbTable->count(array(
+            'status' => Application_Model_DbTable_CmsServices::STATUS_ENABLED
+        ));
        
        
-                
+        $this->view->totalNumberOfServices = $totalNumberOfServices;        
         $this->view->activeServices = $activeServices;
-        $this->view->totalNumberOfServices = $totalNumberOfServices;
-        $this->view->services = $services;
+        
       
     }
 

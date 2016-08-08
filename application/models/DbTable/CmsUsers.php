@@ -69,6 +69,12 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
         $this->update(array('password'=> md5($newPassword)), 'id = ' . $id);
     }
     
+    public function resetUserPassword($id) {
+        $this->update(array(
+            'password' => md5(self::DEFAULT_PASSWORD),
+                ), 'id = ' . $id);
+    }
+    
       /**
      * 
      * @param int $id Id of the user to delete
@@ -101,11 +107,7 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
                 ), 'id = ' . $id);
     }
     
-    public function resetUserPassword($id) {
-        $this->update(array(
-            'password' => md5(self::DEFAULT_PASSWORD),
-                ), 'id = ' . $id);
-    }
+
     
     /**
      * Array $parameters is keeping searched parameters 
@@ -278,35 +280,35 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
             }
     }
     
-    /**
-     * 
-     * @param array $users
-     * @return int number of active services
-     */
-      public function activeUsers($users) {
-
-        $activeUsers = 0;
-        foreach ($users as $user) {
-            if ($user['status'] == self::STATUS_ENABLED) {
-                $activeUsers ++;
-            }
-        }
-        return $activeUsers;
-    }
-    
-    /**
-     * 
-     * @param array $users
-     * @return int total number of Users
-     */
-    public function totalUsers($users) {
-        $totalNumberOfUsers = 0;
-
-        foreach ($users as $user) {
-            $totalNumberOfUsers ++;
-        }
-
-        return $totalNumberOfUsers;
-    }
+//    /**
+//     * 
+//     * @param array $users
+//     * @return int number of active services
+//     */
+//      public function activeUsers($users) {
+//
+//        $activeUsers = 0;
+//        foreach ($users as $user) {
+//            if ($user['status'] == self::STATUS_ENABLED) {
+//                $activeUsers ++;
+//            }
+//        }
+//        return $activeUsers;
+//    }
+//    
+//    /**
+//     * 
+//     * @param array $users
+//     * @return int total number of Users
+//     */
+//    public function totalUsers($users) {
+//        $totalNumberOfUsers = 0;
+//
+//        foreach ($users as $user) {
+//            $totalNumberOfUsers ++;
+//        }
+//
+//        return $totalNumberOfUsers;
+//    }
 
 }

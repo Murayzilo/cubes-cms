@@ -11,10 +11,7 @@ class Admin_MembersController extends Zend_Controller_Action {
             'errors' => $flashMessenger->getMessages('errors')
         );
 
-
-
-//prikaz svih member-a
-
+        //prikaz svih member-a
         $cmsMembersDbTable = new Application_Model_DbTable_CmsMembers();
 
  	$members = $cmsMembersDbTable->search(array(
