@@ -1,4 +1,5 @@
 <?php
+
 class Application_Model_Filter_UrlSlug implements Zend_Filter_Interface 
 {
     public function filter($value) {

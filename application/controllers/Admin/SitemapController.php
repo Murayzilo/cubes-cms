@@ -38,6 +38,7 @@ class Admin_SitemapController extends Zend_Controller_Action {
         $this->view->currentSitemapPageId = $id;
     }
     public function addAction() {
+        
         $request = $this->getRequest(); //podaci iz url-a iz forme koje dobijemo
         $parentId = (int) $request->getParam('parent_id', 0);
         if ($parentId < 0) {
