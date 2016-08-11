@@ -97,7 +97,7 @@ $this->headTitle('Site Map Pages');
                                             <a 
                                                 href="<?php echo $this->url(array('controller' => 'admin_sitemap', 'action' => 'edit', 'id' => $sitemapPage['id']), 'default', true);?>"
                                                 type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                            <button data-siteTitle="<?php echo $this->escape($sitemapPage['short_title']); ?>" data-sitemap-page-id="<?php echo $this->escape($sitemapPage['id']); ?>" type="button" class="btn btn-default" data-action="enable" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
+                                            <button data-sitemap-page-id="<?php echo $this->escape($sitemapPage['id']); ?>" type="button" class="btn btn-default" data-action="enable" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
                                             <button data-sitemap-page-id="<?php echo $this->escape($sitemapPage['id']); ?>" data-action="delete" type="button" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
 
                                         </div>
@@ -132,7 +132,7 @@ $this->headTitle('Site Map Pages');
                                             <a 
                                                 href="<?php echo $this->url(array('controller' => 'admin_sitemap', 'action' => 'edit', 'id' => $sitemapPage['id']), 'default', true); ?>"
                                                 type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                                            <button data-siteTitle="<?php echo $this->escape($sitemapPage['short_title']); ?>" data-sitemap-page-id="<?php echo $this->escape($sitemapPage['id']); ?>" data-action="disable" type="button" class="btn btn-default" title="disable"><i class="glyphicon glyphicon-remove"></i></button>
+                                            <button data-sitemap-page-id="<?php echo $this->escape($sitemapPage['id']); ?>" data-action="disable" type="button" class="btn btn-default" title="disable"><i class="glyphicon glyphicon-remove"></i></button>
                                             <button data-sitemap-page-id="<?php echo $this->escape($sitemapPage['id']); ?>" data-action="delete" type="button" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
                                         </div>
                                     </td>
@@ -185,7 +185,7 @@ $this->headTitle('Site Map Pages');
                 <h4 class="modal-title">Disable sitemap page</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to disable sitemap page ? <span class="sitemap33" class="btn btn-tumblr"></span></p>
+                <p>Are you sure you want to disable sitemap page? <span class="sitemap33" class="btn btn-tumblr"></span></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -207,7 +207,7 @@ $this->headTitle('Site Map Pages');
                 <h4 class="modal-title">Enable sitemap page</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to enable sitemap page ? <span class="sitemap333" class="btn btn-tumblr"></span></p>
+                <p>Are you sure you want to enable sitemap page? <span class="sitemap333" class="btn btn-tumblr"></span></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -226,11 +226,9 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin/bower_components/jque
 $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/jquery-ui-1.12.0/jquery-ui.min.js'));
 ?>
 
-
-
-
 <script>
-<?php $this->inlineScript()->captureStart(); ?>
+<?php $this->inlineScript()->captureStart();?>
+    // Delete
     $('#rows-table').on('click', '[data-action="delete"]', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -244,6 +242,7 @@ $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/jquery
         $('#delete-warning-dialog').find('[name="id"]').val(sitemapPageId);
         $('#delete-warning-dialog').modal('show');
     });
+    // Disable
     $('#rows-table').on('click', '[data-action="disable"]', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -256,9 +255,9 @@ $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/jquery
         //set value for input field with name "id"
         $('#disable-warning-dialog').find('[name="id"]').val(sitemapPageId);
         $('#disable-warning-dialog').modal('show');
-        var sitemapData = target.attr('data-siteTitle');
-        $('.sitemap33').text(sitemapData);
+
     });
+    // Enable
     $('#rows-table').on('click', '[data-action="enable"]', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -271,9 +270,9 @@ $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/jquery
         //set value for input field with name "id"
         $('#enable-warning-dialog').find('[name="id"]').val(sitemapPageId);
         $('#enable-warning-dialog').modal('show');
-        var sitemapData = target.attr('data-siteTitle');
-        $('.sitemap333').text(sitemapData);
+
     });
+    // Sort
     $('[data-action="toggle-sort"]').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -306,6 +305,7 @@ $this->inlineScript()->appendFile($this->baseUrl('/admin/bower_components/jquery
             $('[data-action="save-order"]').show();
         }
     });
+    //Save order
     $('[data-action="save-order"]').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();

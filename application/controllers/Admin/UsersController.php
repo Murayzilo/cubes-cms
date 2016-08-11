@@ -394,7 +394,7 @@ class Admin_UsersController extends Zend_Controller_Action
                     'statusMessage' => 'User: ' . $user['first_name'] . ' ' . $user['last_name'] . ' has been disabled'
                 );
                 //send json as response
-                $this->getHelper('Json')->sendJson($responseJson);
+                $this->getHelper('Json')->sendJson($responseJson);//json action helper, layout is being disabled, view script rendering is being disabled
             } else {
                 //request is not ajax
                 //send message over session-flash message
@@ -577,7 +577,7 @@ class Admin_UsersController extends Zend_Controller_Action
         $usersFilteredCount = $cmsUsersTable->count($filters);
         $usersTotal = $cmsUsersTable->count();
         
-        //prosledi prezentac logici
+        //prosledivanje parametara prezentac logici
         $this->view->users = $users; 
         $this->view->usersFilteredCount = $usersFilteredCount;
         $this->view->usersTotal = $usersTotal;

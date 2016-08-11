@@ -29,7 +29,7 @@ class AboutusController extends Zend_Controller_Action
         $request= $this->getRequest();
         $sitemapPageId= (int)$request->getParam('sitemap_page_id');
         //proveravamo page id
-        if($sitemapPageId<=0){
+        if($sitemapPageId <= 0){
             throw new Zend_Controller_Router_Exception('Invalid sitemap page id: ' . $sitemapPageId, 404);
         }
         //komunikacija sa bazom

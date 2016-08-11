@@ -39,7 +39,7 @@ $form->setElementDecorators(array('ViewHelper'));
                                 'action' => 'index',
                                 'id' => $sitemapPage['id']
                                     ), 'default', true);
-                            ?>"></i> <?php echo $this->escape($sitemapPage['short_title']); ?></a>
+                            ?>"><?php echo $this->escape($sitemapPage['short_title']);?></a>
                         </li>
 <?php } ?>
                 </ol>
@@ -183,9 +183,9 @@ $form->setElementDecorators(array('ViewHelper'));
                                     <div class="has-error">
                                     <?php foreach ($form->getElement('body')->getMessages() as $message) { ?>
                                             <p class="help-block"><?php echo $this->escape($message); ?></p>
-    <?php } ?>
+                            <?php } ?>
                                     </div>
-<?php } ?>
+                            <?php } ?>
                             </div>
                         </div>
                         <div class="form-group">
@@ -230,12 +230,12 @@ $form->setElementDecorators(array('ViewHelper'));
 
         var target = $(this).is('#short_title') ? $(this) : $(this).closest('#short_title');
         //preko val dobijamo vrednost input polja
-        var shortTitleText = target.val(); //dobijamo ono sto je upisano u ovo textualno polje zato jer nije prosledjen argument u val()
-        //sve sto ima name atribut nad njemu mozemo da pozovemo val vrednost
+        var shortTitleText = target.val(); 
+        
 
         if ($('#title').val() === '') {
 
-            $('#title').val(shortTitleText);//ovde je prosledjen argument i zato se ta vrednost setuje 
+            $('#title').val(shortTitleText);// prosledjen argument 
         }
 
 

@@ -1,23 +1,25 @@
 <?php
-//setovali smo na serverskoj strani ove parametre i sada ih ovde prosledjujemo (controller)
+//setovali smo na serverskoj strani ove kjluceve *parametre* i sada ih ovde prosledjujemo (controller)
 $datatableJson = array(
     'draw' => $this->draw,
     'recordsTotal' => $this->usersTotal,
     'recordsFiltered' => $this->usersFilteredCount,
+     //u data kljuc idu redovi u tabeli 
+    // data je niz nizova
     'data' => array()
 );
 foreach ($this->users as $user) {
     $row = array();
 
-//    $row['DT_RowData'] = array (
-//        'user-id' => $user['id']
-//    );
+    $row['DT_RowData'] = array (
+        'user-id' => $user['id']
+   );
 
     $row['DT_RowAttr'] = array(
         'data-user-id' => $user['id'],
         'title' => $user['username']
     );
-
+    // crvena osencena boja za disabled users
     if ($user['status'] == Application_Model_DbTable_CmsUsers::STATUS_DISABLED) {
         $row['DT_RowClass'] = 'danger';
     }
@@ -30,15 +32,16 @@ foreach ($this->users as $user) {
             }
         } else if ($columnName == 'actions') {
             $this->placeholder('actions')->exchangeArray(array()); //mora da se od prethodnog user-a isprazni place holder i puni se sa novim podacima za novog usera
-            $this->placeholder('actions')->captureStart();
+            $this->placeholder('actions')->captureStart(); // ono sto hvatas smestaj pod kljucem actions
             
             if ($user['status'] == Application_Model_DbTable_CmsUsers::STATUS_ENABLED) {
-                ?>
+                ?> 
+<!--                Output Buffering  interno se poziva f-ja ob_start()  ob_end()-->
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
                     <a 
-                        href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true); ?>"
+                        href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true);?>"
                         type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <button data-userName="<?php echo $this->escape($user['first_name'] . ' ' . $user['last_name']); ?>" data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="disable"type="button" class="btn btn-default" title="disable"><i class="glyphicon glyphicon-remove"></i></button>
+                    <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="disable" type="button" class="btn btn-default" title="disable"><i class="glyphicon glyphicon-remove"></i></button>
                     <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="resetpassword" type="button" class="btn btn-default" title="resetpassword"><i class="fa fa-unlock-alt"></i></button>
                     <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="delete" type="button" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
 
@@ -49,9 +52,9 @@ foreach ($this->users as $user) {
                 ?>
                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
                     <a 
-                        href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true); ?>"
+                        href="<?php echo $this->url(array('controller' => 'admin_users', 'action' => 'edit', 'id' => $user['id']), 'default', true);?>"
                         type="button" class="btn btn-default" title="edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <button data-userName="<?php echo $this->escape($user['first_name'] . ' ' . $user['last_name']); ?>" data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="enable" type="button" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
+                    <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="enable" type="button" class="btn btn-default" title="enable"><i class="glyphicon glyphicon-ok"></i></button>
                     <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="resetpassword" type="button" class="btn btn-default" title="resetpassword"><i class="fa fa-unlock-alt"></i></button>
                     <button data-user-id="<?php echo $this->escape($user['id']); ?>" data-action="delete" type="button" class="btn btn-default" title="delete"><i class="glyphicon glyphicon-trash"></i></button>
 
@@ -60,6 +63,7 @@ foreach ($this->users as $user) {
                 <?php
             }
             $this->placeholder('actions')->captureEnd();
+            
             $row[] = $this->placeholder('actions')->toString();
         } else {
             $row[] = $user[$columnName];

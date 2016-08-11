@@ -168,7 +168,7 @@ class Application_Model_DbTable_CmsUsers extends Zend_Db_Table_Abstract
             
             if (isset($parameters['page'])) {
                 // page is se to limit by page
-                $select->limitPage($parameters['page'], $parameters['page']);
+                $select->limitPage($parameters['page'], $parameters['limit']);
             }else{
                 // page is not set, just do regular limit
                 $select->limit($parameters['limit']);
