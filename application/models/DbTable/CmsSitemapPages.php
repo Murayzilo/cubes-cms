@@ -297,5 +297,36 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
             'status' => self::STATUS_ENABLED
                 ), 'id = ' . $id);
     }
+    /**
+     * Returns count by type example
+     * @param type $filters
+     * @return array (
+     * 'StaticPage' => 3;
+     *  'AboutusPage' => 1,
+     *  'ContactUsPage' => 1
+     * )
+     */
+    public function countByTypes($filters = array()) { // vraca broj stranica po tipu
+        $select = $this->select();
+        
+        $this->processFilters($filters, $select);
+        // reset previously set columns for 
+        $select->reset('columns');
+        // set one column/field to fetch and it is COUNT function
+        $select->from($this->_name, array(
+            'type',
+            'COUNT(*) as total_by_type'
+        ));
+        $select->group('type');
+        
+        $rows = $this->fetchAll($select);
+        
+        $countByTypes = array();
+  
+        foreach ($rows as $row) {
+            $countByTypes[$row['type']] = $row['total_by_type'];
+        }
+        return $countByTypes ;
+    }
 
 }

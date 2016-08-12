@@ -44,20 +44,26 @@ class Admin_SitemapController extends Zend_Controller_Action {
         if ($parentId < 0) {
             throw new Zend_Controller_Router_Exception('Invalid parent id for site map pages ', 404);
         }
+        
+        $parentType = '';
+        
         $cmsSitemapPagesDbTable = new Application_Model_DbTable_CmsSitemapPages();
+        
         if ($parentId != 0) {
             //check if parent page exist
             $parentSitemapPage = $cmsSitemapPagesDbTable->getSitemapPageById($parentId);
             if (!$parentSitemapPage) {
                 throw new Zend_Controller_Router_Exception('No site map page is found for id:  ' . $parentId, 404);
             }
+            
+            $parentType = $parentSitemapPage['type'];
         }
         $flashMessenger = $this->getHelper('FlashMessenger');
         $systemMessages = array(
             'success' => $flashMessenger->getMessages('success'),
             'errors' => $flashMessenger->getMessages('errors'),
         );
-        $form = new Application_Form_Admin_SitemapPageAdd($parentId);
+        $form = new Application_Form_Admin_SitemapPageAdd($parentId, $parentType);
         $form->populate(array(
         ));
         if ($request->isPost() && $request->getPost('task') === 'save') {//ispitujemo da li je pokrenuta forma
@@ -138,12 +144,20 @@ class Admin_SitemapController extends Zend_Controller_Action {
             //prekida se izvrsavanje proograma i prikazuje se page not found
             throw new Zend_Controller_Router_Exception('No sitemapPage is found with id ' . $id, 404);
         }
+        
+        $parentType = '';
+        
+        if ($sitemapPage['parent_id']!= 0)   {
+            $parentSitemapPage = $cmsSitemapPagesTable->getSitemapPageById($sitemapPage['parent_id']);
+            $parentType = $parentSitemapPage['type'];
+        }
+        
         $flashMessenger = $this->getHelper('FlashMessenger');
         $systemMessages = array(
             'success' => $flashMessenger->getMessages('success'),
             'errors' => $flashMessenger->getMessages('errors'),
         );
-        $form = new Application_Form_Admin_SitemapPageEdit($sitemapPage['id'], $sitemapPage['parent_id']);
+        $form = new Application_Form_Admin_SitemapPageEdit($sitemapPage['id'], $sitemapPage['parent_id'], $parentType['']);
         //default form data//mi nemamo default vrednosti
         $form->populate($sitemapPage);
         if ($request->isPost() && $request->getPost('task') === 'update') {//ispitujemo da lije pokrenuta forma

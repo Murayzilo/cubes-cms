@@ -27,6 +27,7 @@ class AboutusController extends Zend_Controller_Action
        //die($select->assemble());
         
         $request= $this->getRequest();
+        
         $sitemapPageId= (int)$request->getParam('sitemap_page_id');
         //proveravamo page id
         if($sitemapPageId <= 0){
