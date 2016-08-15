@@ -34,12 +34,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         
         // tipovi stranica u kojima definisemo sta sve moze da se nadje u rutu sajta i koliko puta
         $rootSitemapPageTypes = array(
-            'StaticPage' => 0, // neogranicen broj strana
+            'StaticPage' => 0, // neogranicen broj strana; parent_id = 0
             'AboutUsPage' => 1,
             'ServicesPage' => 1,
             'ContactPage' => 1
         );
-        
+        // popunjava se u bootstrap fajlu
+        // registar vrednosti koje kosristimo kroz aplikaciju
         Zend_Registry::set('sitemapPageTypes', $sitemapPageTypes);
         Zend_Registry::set('rootSitemapPageTypes', $rootSitemapPageTypes);
 

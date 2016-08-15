@@ -157,7 +157,7 @@ class Admin_SitemapController extends Zend_Controller_Action {
             'success' => $flashMessenger->getMessages('success'),
             'errors' => $flashMessenger->getMessages('errors'),
         );
-        $form = new Application_Form_Admin_SitemapPageEdit($sitemapPage['id'], $sitemapPage['parent_id'], $parentType['']);
+        $form = new Application_Form_Admin_SitemapPageEdit($sitemapPage['id'], $sitemapPage['parent_id'], $parentType);
         //default form data//mi nemamo default vrednosti
         $form->populate($sitemapPage);
         if ($request->isPost() && $request->getPost('task') === 'update') {//ispitujemo da lije pokrenuta forma

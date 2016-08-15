@@ -1,0 +1,26 @@
+<?php
+Zend_Layout::getMvcInstance()->disableLayout();
+$activeMembers = $this->activeMembers;
+$totalNumberOfMembers = $this->totalNumberOfMembers;
+?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-table fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+                <div class="huge"><?php echo $this->escape($activeMembers . ' / ' . $totalNumberOfMembers);?></div>
+                <div> Active / Total</div>
+            </div>
+        </div>
+    </div>
+    <a href="<?php echo $this->url(array('controller' => 'admin_members'), 'default', true); ?>">
+        <div class="panel-footer">
+            <span class="pull-left">View Details - Members</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+        </div>
+    </a>
+</div>
