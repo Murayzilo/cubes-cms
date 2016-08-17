@@ -40,7 +40,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'ContactPage' => 1
         );
         // popunjava se u bootstrap fajlu
-        // registar vrednosti koje kosristimo kroz aplikaciju
+        // registar vrednosti koje koristimo kroz aplikaciju
         Zend_Registry::set('sitemapPageTypes', $sitemapPageTypes);
         Zend_Registry::set('rootSitemapPageTypes', $rootSitemapPageTypes);
 
@@ -95,17 +95,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'sitemap_page_id' => $sitemapPageId
                 )
             ));
-            
-            $router->addRoute('member-route', new Zend_Controller_Router_Route(
-                //posto id pocinje sa dve tacke tu se menja
-                //id naziv parametra koji hvatamo iz URL-a
-                $sitemapPageMap['url'] . '/member/:id/:member_slug', 
-            array(
-            'controller' => 'aboutus',
-            'action' => 'member',
-            'member_slug' => ''
-                )
-            ));
         }
         
         if ($sitemapPageMap['type'] == 'AboutUsPage') {
@@ -118,6 +107,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'sitemap_page_id' => $sitemapPageId
                 )
             ));
+                $router->addRoute('member-route', new Zend_Controller_Router_Route(
+                //posto id pocinje sa dve tacke tu se menja
+                //id naziv parametra koji hvatamo iz URL-a
+                $sitemapPageMap['url'] . '/member/:id/:member_slug', 
+            array(
+            'controller' => 'aboutus',
+            'action' => 'member',
+            'member_slug' => ''
+                )
+            ));
         }
         if ($sitemapPageMap['type'] == 'ContactPage') {
 
@@ -125,6 +124,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                 $sitemapPageMap['url'], 
             array(
             'controller' => 'contact',
+            'action' => 'index',
+            'sitemap_page_id' => $sitemapPageId
+                )
+            ));
+        }
+        
+        if ($sitemapPageMap['type'] == 'ServicesPage') {
+
+            $router->addRoute('static-page-route-' . $sitemapPageId, new Zend_Controller_Router_Route_Static(
+                $sitemapPageMap['url'], 
+            array(
+            'controller' => 'services',
             'action' => 'index',
             'sitemap_page_id' => $sitemapPageId
                 )

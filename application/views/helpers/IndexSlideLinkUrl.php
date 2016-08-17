@@ -8,7 +8,7 @@ class Zend_View_Helper_IndexSlideLinkUrl extends Zend_View_Helper_Abstract {
             case 'SitemapPage':
                 return $this->view->sitemapPageUrl($indexSlide['sitemap_page_id']);
                 break;
-            case 'Internallink':
+            case 'InternalLink':
                 return $this->view->baseUrl($indexSlide['internal_link_url']);
                 break;
             case 'ExternalLink':
