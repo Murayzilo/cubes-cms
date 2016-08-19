@@ -1,7 +1,5 @@
 <?php
-
 $this->headTitle('Photo Galleries - Edit Photo Gallery');
-
 $form = $this->form;
 $form->setElementDecorators(array('ViewHelper'));
 ?>
@@ -270,8 +268,8 @@ $form->setElementDecorators(array('ViewHelper'));
 </form><!-- /.modal -->
 
 <form method="post" enctype="multipart/form-data" action="<?php echo $this->url(array('controller' => 'admin_photos', 'action' => 'add'), 'default', true);?>" id="add-photo-dialog" class="modal fade form-horizontal" tabindex="-1" role="dialog">
-    <input type="hidden" name="task" value="save">
-    <input type="hidden" name="photo_gallery_id" value="<?php echo $this->escape($this->photoGallery['id']);?>">
+  <input type="hidden" name="task" value="save">
+  <input type="hidden" name="photo_gallery_id" value="<?php echo $this->escape($this->photoGallery['id']);?>">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

@@ -51,7 +51,7 @@ class Admin_PhotoGalleriesController extends Zend_Controller_Action {
 
                 //check form is valid
                 if (!$form->isValid($request->getPost())) {
-                    throw new Application_Model_Exception_InvalidInput('Invalid data was sent for new photoGallery.');
+                    throw new Application_Model_Exception_InvalidInput('Invalid data was sent for new photo gallery.');
                 }
 
                 //get form data
@@ -166,7 +166,7 @@ class Admin_PhotoGalleriesController extends Zend_Controller_Action {
 
                 //check form is valid
                 if (!$form->isValid($request->getPost())) {
-                    throw new Application_Model_Exception_InvalidInput('Invalid data was sent for photoGallery.');
+                    throw new Application_Model_Exception_InvalidInput('Invalid data was sent for photo gallery.');
                 }
 
                 //get form data
@@ -206,7 +206,7 @@ class Admin_PhotoGalleriesController extends Zend_Controller_Action {
                 $cmsPhotoGalleriesTable->updatePhotoGallery($photoGallery['id'], $formData);
 
                 //set system message
-                $flashMessenger->addMessage('PhotoGallery has been updated', 'success');
+                $flashMessenger->addMessage('Photo Gallery has been updated', 'success');
                 // $flashMessenger->addMessage('Or maybe somethign is wrong', 'errors');
                 //redirect to same or another page
                 $redirector = $this->getHelper('Redirector');
@@ -269,7 +269,7 @@ class Admin_PhotoGalleriesController extends Zend_Controller_Action {
             $photoGallery = $cmsPhotoGalleriesTable->getPhotoGalleryById($id);
 
             if (empty($photoGallery)) {
-                throw new Application_Model_Exception_InvalidInput('No photoGallery is found with id' . $id , 'errors');
+                throw new Application_Model_Exception_InvalidInput('No photo gallery is found with id' . $id , 'errors');
             }
 
 
@@ -322,7 +322,7 @@ class Admin_PhotoGalleriesController extends Zend_Controller_Action {
 
             if ($id <= 0) {
 
-                throw new Application_Model_Exception_InvalidInput('Invalid photoGallery id: ' . $id , 'errors');
+                throw new Application_Model_Exception_InvalidInput('Invalid photo gallery id: ' . $id , 'errors');
             }
 
             $cmsPhotoGalleriesTable = new Application_Model_DbTable_CmsPhotoGalleries();
@@ -330,7 +330,7 @@ class Admin_PhotoGalleriesController extends Zend_Controller_Action {
             $photoGallery = $cmsPhotoGalleriesTable->getPhotoGalleryById($id);
 
             if (empty($photoGallery)) {
-                throw new Application_Model_Exception_InvalidInput('No photoGallery is found with id: ' . $id , 'errors');
+                throw new Application_Model_Exception_InvalidInput('No photo gallery is found with id: ' . $id , 'errors');
             }
 
 
