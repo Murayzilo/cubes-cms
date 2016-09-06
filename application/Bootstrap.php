@@ -5,7 +5,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected function _initRouter() {
         //ensure if database is configured
         $this->bootstrap('db'); 
-        //ogranicvanje broja stranica
+        //ogranicavanje broja stranica
         $sitemapPageTypes = array(
             'StaticPage' => array(
                 'title' => 'Static Page',
@@ -29,7 +29,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                  'title' => 'Contact Page',
                 'subtypes' => array(
                 )
-            )
+            ),
+            'PhotoGalleriesPage' => array(
+                'title' => 'PhotoGalleries Page',
+                'subtypes' => array(
+                )
+            ),
         );
         
         // tipovi stranica u kojima definisemo sta sve moze da se nadje u rutu sajta i koliko puta
@@ -41,7 +46,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'PhotoGalleriesPage' => 1
         );
         // popunjava se u bootstrap fajlu
-        // registar vrednosti koje koristimo kroz aplikaciju
+        // registar vrednosti koje koristimo kroz aplikaciju ; ova klasa implementira singleton pattern
         Zend_Registry::set('sitemapPageTypes', $sitemapPageTypes);
         Zend_Registry::set('rootSitemapPageTypes', $rootSitemapPageTypes);
 
@@ -75,13 +80,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 				'controller' => 'contact',
 				'action' => 'index'
 			)
-                        ))->addRoute('ask-member-route', new Zend_Controller_Router_Route(
-			'ask-member/:id/:member_slug',
-			array(
-				'controller' => 'contact',
-				'action' => 'askmember',
-				'member_slug' => ''
-			)));
+                ))->addRoute('ask-member-route', new Zend_Controller_Router_Route(
+                'ask-member/:id/:member_slug',
+                array(
+                        'controller' => 'contact',
+                        'action' => 'askmember',
+                        'member_slug' => ''
+                )));
         
         $sitemapPagesMap = Application_Model_DbTable_CmsSitemapPages::getSitemapPagesMap();
         //print_r($sitemapPagesMap);die();
