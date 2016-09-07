@@ -8,7 +8,7 @@ class Zend_View_Helper_PhotoGalleryLeadingPhotoUrl extends Zend_View_Helper_Abst
 		$photoGalleryLeadingPhotoFilePath = PUBLIC_PATH . '/uploads/photo-galleries/' . $photoGalleryLeadingPhotoFileName;                    ;
 		
 		//Helper ima property view koji je Zend_View
-		// i preko kojeg pozivamo ostale view helpere
+		// i preko koga pozivamo ostale view helpere
 		//na primer $this->view->baseUrl()
 		
 		

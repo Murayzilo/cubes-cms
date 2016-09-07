@@ -306,7 +306,7 @@ class Application_Model_DbTable_CmsSitemapPages extends Zend_Db_Table_Abstract {
      *  'ContactUsPage' => 1
      * )
      */
-    public function countByTypes($filters = array()) { // vraca broj stranica po tipu
+    public function countByTypes($filters = array()) { //vraca broj stranica po tipu
         $select = $this->select();
         
         $this->processFilters($filters, $select);

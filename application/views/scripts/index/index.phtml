@@ -73,30 +73,7 @@ $photoGalleries = $this->photoGalleries;
         </div>
         <!-- portfolio -->
         <!-- Recommended screenshot size: 400px x 300px -->
-        <div class="block portfolio margin-top-large">
-            <h2 class="block-title">
-                <span>Photo galleries</span> 
-                <small><a href="<?php echo $this->sitemapPageUrl($photoGalleriesSitemapPages['id']); ?>">View all</a></small>
-            </h2>
-            <ul class="thumbnails row projects">
-                 <?php foreach($photoGalleries as $photoGallery) { ?>
-                <li class="col-md-4 ">
-                    <div class="">
-                        <div class="project">
-                            <a class="lnk-polaroid" href="<?php echo $this->photoGalleryUrl($photoGallery); ?>">
-                                <img src="<?php echo $this->photoGalleryLeadingPhotoUrl($photoGallery); ?>" alt="<?php echo $this->escape($photoGallery['title']); ?>" class="img-polaroid img-responsive" />
-                            </a>
-                            <h3 class="title">
-                                <a href="<?php echo $this->photoGalleryUrl($photoGallery); ?>"><?php echo $this->escape($photoGallery['title']); ?></a>
-                                <small class="pull-right"></small>
-                            </h3>
-                            <p class="muted"><?php echo $this->escape($photoGallery['description']); ?></p>
-                        </div>
-                    </div>
-                </li>
-                 <?php }?>
-            </ul>
-        </div>
+        
     </div>
 </div>
 <?php
