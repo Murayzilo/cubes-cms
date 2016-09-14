@@ -3,23 +3,30 @@ class Admin_ServicesController extends Zend_Controller_Action
 {
 	
 	public function indexAction() {
-		$flashMessenger = $this->getHelper('FlashMessenger');
-		
-		$systemMessages = array(
-			
-			'success' => $flashMessenger->getMessages('success'),
-			'errors' => $flashMessenger->getMessages('errors')
-		);
-		
-		// prikaz svih servisa-a
-		$cmsServicesDbTable = new Application_Model_DbTable_CmsServices();
-		
-                $services = $cmsServicesDbTable->search();
-		
-		$this->view->services = $services;
-		$this->view->systemMessages = $systemMessages;
-		
-	}
+        $flashMessenger = $this->getHelper('FlashMessenger');
+        $systemMessages = array(
+            'success' => $flashMessenger->getMessages('success'),
+            'errors' => $flashMessenger->getMessages('errors'),
+        );
+        // prikaz svih servisa-a
+       $cmsServicesDbTable = new Application_Model_DbTable_CmsServices();
+       $services = $cmsServicesDbTable->search(array(
+            //'filters' => array(
+            //'description_search'=> 'ideja'
+            
+            //),
+            'orders' => array(//sortiram tabelu po
+                'order_number'=>'ASC'
+            ),
+            //'limit' => 4,
+            //'page' => 2
+        ));
+        //$select = $cmsServicesDbTable->select();
+        //$select->order('order_number');
+        //$services = $cmsServicesDbTable->fetchAll($select);
+        $this->view->services = $services;
+        $this->view->systemMessages = $systemMessages;  
+    }
 	
 	public function addAction() {
 		
@@ -166,7 +173,7 @@ class Admin_ServicesController extends Zend_Controller_Action
                 throw new Application_Model_Exception_InvalidInput('No service is found with id: ' . $id, 'errors');
             }
             $cmsClientsTable->deleteService($id);
-            $flashMessenger->addMessage('Service ' . $service['first_name'] . ' ' . $service['last_name'] . 'has been deleted', 'success');
+            $flashMessenger->addMessage('Service : ' . $service['title'] . ' has been deleted', 'success');
             //redirect on another page
             $redirector = $this->getHelper('Redirector');
             $redirector->setExit(true)
