@@ -110,7 +110,7 @@ class Admin_PhotogalleriesController extends Zend_Controller_Action {
         $form = new Application_Form_Admin_PhotoGalleryEdit();
         //default form data//mi nemamo default vrednosti
         $form->populate($photoGallery);
-        if ($request->isPost() && $request->getPost('task') === 'update') {//ispitujemo da lije pokrenuta forma
+        if ($request->isPost() && $request->getPost('task') === 'update') {//ispitujemo da li je pokrenuta forma
             try {
                 //check form is valid
                 if (!$form->isValid($request->getPost())) {//sve sto je u post zahtevu prosledi formi na validaciju
@@ -239,7 +239,7 @@ class Admin_PhotogalleriesController extends Zend_Controller_Action {
                 throw new Application_Model_Exception_InvalidInput('No photoGallery is found with id: ' . $id, 'errors');
             }
             $cmsPhotoGalleriesTable->disablePhotoGallery($id);
-            $flashMessenger->addMessage('PhotoGallery: ' . $photoGallery['title'] . ' ' . $photoGallery['last_name'] . 'has been disabled', 'success');
+            $flashMessenger->addMessage('PhotoGallery: ' . $photoGallery['title'] .  ' has been disabled', 'success');
             //redirect on another page
             $redirector = $this->getHelper('Redirector');
             $redirector->setExit(true)
@@ -284,7 +284,7 @@ class Admin_PhotogalleriesController extends Zend_Controller_Action {
                 throw new Application_Model_Exception_InvalidInput('No photoGallery is found with id: ' . $id, 'errors');
             }
             $cmsPhotoGalleriesTable->enablePhotoGallery($id);
-            $flashMessenger->addMessage('PhotoGallery: ' . $photoGallery['first_name'] . ' ' . $photoGallery['last_name'] . 'has been enabled', 'success');
+            $flashMessenger->addMessage('PhotoGallery: ' .  $photoGallery['title']. ' has been enabled', 'success');
             //redirect on another page
             $redirector = $this->getHelper('Redirector');
             $redirector->setExit(true)
