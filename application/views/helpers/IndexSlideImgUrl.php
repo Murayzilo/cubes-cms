@@ -22,3 +22,7 @@ class Zend_View_Helper_IndexSlideImgUrl extends Zend_View_Helper_Abstract {
     }
 
 }
+
+		//Helper ima property view koji je Zend_View
+		// i preko kojeg pozivamo ostale view helpere
+		//na primer $this->view->baseUrl()

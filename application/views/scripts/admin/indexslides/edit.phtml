@@ -244,7 +244,7 @@ $form->setElementDecorators(array('ViewHelper'));//ispis gresaka u formi
                             <label class="col-md-2 control-label" for="index_slide_photo">Photo</label>
                             <div class="col-md-4"> 
                                  <div>
-                                    <a href="#" clas="thumbnail">
+                                    <a href="#" class="thumbnail">
                                         <img src="<?php echo $this->indexSlideImgUrl($this->indexSlide);?>">
                                     </a>
                                 </div>
@@ -267,7 +267,7 @@ $form->setElementDecorators(array('ViewHelper'));//ispis gresaka u formi
                         <div class="form-group">
                             <label class="col-md-2 control-label" for="new_indexSlide_cancel"></label>
                             <div class="col-md-4 text-right">
-                                <a href="<?php echo $this->url(array('controller'=>'admin-indexSlides', 'action'=>'index'), 'default', true); ?>" id="new_indexSlide_cancel" name="new_indexSlide_cancel" class="btn btn-default">Cancel</a>
+                                <a href="<?php echo $this->url(array('controller'=>'admin_indexslides', 'action'=>'index'), 'default', true); ?>" id="new_indexSlide_cancel" name="new_indexSlide_cancel" class="btn btn-default">Cancel</a>
                                 <button type="submit" id="new_indexSlide_submit" name="new_indexSlide_submit" class="btn btn-success">Save</button>
                             </div>
                         </div>
@@ -280,7 +280,7 @@ $form->setElementDecorators(array('ViewHelper'));//ispis gresaka u formi
 </div>
         
 </div>
-
+ </div>
     <script>
     <?php $this->inlineScript()->captureStart();?>
     

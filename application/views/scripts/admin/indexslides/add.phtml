@@ -1,39 +1,34 @@
 <?php
-
 $this->headTitle('Index Slider - New Slide');
-
-
 $form = $this->form;
 $form->setElementDecorators(array('ViewHelper'));
-
-
 ?>
 
 <div class="page-header">
-  <h1>Index Slider - <small>New Index Slide</small></h1>
+    <h1>Index Slider - <small>New Index Slide</small></h1>
 </div>
 
 <div class='row'>
     <div class='col-lg-12'>
-           <?php echo $this->systemMessagesHtml($this->systemMessages);?>
+        <?php echo $this->systemMessagesHtml($this->systemMessages); ?>
     </div>
 </div>
 
 <div class='row'>
     <div class='col-lg-12'>
-    
-        <div class="panel panel-default">
-  <div class="panel-heading text-right">
-  
-      <div class="btn-group" role="group" aria-label="...">
-  <a 
-      href='<?php echo $this->url(array('controller'=>'admin_indexslides', 'action'=>'index'), 'default', true);?>' 
-      class="btn btn-default"
-      ><i class='glyphicon glyphicon-arrow-left'></i> Back to all Slides</a>
 
-      </div>
-  
-  </div>
+        <div class="panel panel-default">
+            <div class="panel-heading text-right">
+
+                <div class="btn-group" role="group" aria-label="...">
+                    <a 
+                        href='<?php echo $this->url(array('controller' => 'admin_indexslides', 'action' => 'index'), 'default', true); ?>' 
+                        class="btn btn-default"
+                        ><i class='glyphicon glyphicon-arrow-left'></i> Back to all Slides</a>
+
+                </div>
+
+            </div>
             <div class="panel-body">
 
                 <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
@@ -53,7 +48,7 @@ $form->setElementDecorators(array('ViewHelper'));
                                     'class' => 'form-control input-md',
                                     'placeholder' => 'enter slide title',
                                     'id' => 'title',
-                                    'required' =>'required'
+                                    'required' => 'required'
                                 ));
                                 ?>
 
@@ -71,14 +66,14 @@ $form->setElementDecorators(array('ViewHelper'));
                         </div>
 
                         <!-- Text input-->
-                        
-
-                        <!-- Text input-->
-                      
 
 
                         <!-- Text input-->
-                       
+
+
+
+                        <!-- Text input-->
+
 
                         <!-- Textarea -->
                         <div class="form-group">
@@ -103,9 +98,9 @@ $form->setElementDecorators(array('ViewHelper'));
                                 <?php } ?>
                             </div>
                         </div>
-                        
-                        
-                                                <div class="form-group">
+
+
+                        <div class="form-group">
                             <label class="col-md-2 control-label" for="link_type">Link Type</label>  
                             <div class="col-md-4">
 
@@ -114,7 +109,7 @@ $form->setElementDecorators(array('ViewHelper'));
                                     'class' => 'form-control input-md',
                                     'placeholder' => '',
                                     'id' => 'link_type',
-                                    'required' =>'required'
+                                    'required' => 'required'
                                 ));
                                 ?>
 
@@ -130,12 +125,10 @@ $form->setElementDecorators(array('ViewHelper'));
                                 <?php } ?>
                             </div>
                         </div>
-                        
-                        
-                        
-                        
 
-                                              <div class="form-group" id="link-label-container">
+
+
+                        <div class="form-group" id="link-label-container">
                             <label class="col-md-2 control-label" for="link_label">Link Label</label>  
                             <div class="col-md-4">
 
@@ -144,7 +137,6 @@ $form->setElementDecorators(array('ViewHelper'));
                                     'class' => 'form-control input-md',
                                     'placeholder' => '',
                                     'id' => 'link_label',
-                                    
                                 ));
                                 ?>
 
@@ -160,9 +152,9 @@ $form->setElementDecorators(array('ViewHelper'));
                                 <?php } ?>
                             </div>
                         </div>
-                        
-                        
-                        
+
+
+
                         <div class="form-group" id="sitemap-page-id-container">
                             <label class="col-md-2 control-label" for="sitemap_page_id">Sitemap Page Id</label>  
                             <div class="col-md-4">
@@ -187,7 +179,7 @@ $form->setElementDecorators(array('ViewHelper'));
                                 <?php } ?>
                             </div>
                         </div>
-                        
+
                         <div class="form-group" id="internal-link-container">
                             <label class="col-md-2 control-label" for="internal_link_url">Internal Link Url</label>  
                             <div class="col-md-4">
@@ -197,72 +189,70 @@ $form->setElementDecorators(array('ViewHelper'));
                                     'class' => 'form-control input-md',
                                     'placeholder' => '',
                                     'id' => 'internal_link_url',
-                                   
                                 ));
                                 ?>
 
                                 <span class="help-block">min 3 max 255 characters</span>  
                             </div>
                             <div class="col-md-4">
-                                <?php if ($form->getElement('internal_link_url')->hasErrors()) { ?>
+                    <?php if ($form->getElement('internal_link_url')->hasErrors()) { ?>
                                     <div class="has-error">
-                                        <?php foreach ($form->getElement('internal_link_url')->getMessages() as $message) { ?>
+                                    <?php foreach ($form->getElement('internal_link_url')->getMessages() as $message) { ?>
                                             <p class="help-block"><?php echo $this->escape($message); ?></p>
                                         <?php } ?>
                                     </div>
-                                <?php } ?>
+                                    <?php } ?>
                             </div>
                         </div>
-                        
+
                         <div class="form-group" id="external-link-container">
                             <label class="col-md-2 control-label" for="external_link_url">External Link Url</label>  
                             <div class="col-md-4">
 
-                                <?php
-                                echo $form->getElement('external_link_url')->setAttribs(array(
-                                    'class' => 'form-control input-md',
-                                    'placeholder' => '',
-                                    'id' => 'external_link_url',
-                                    
-                                ));
-                                ?>
+                    <?php
+                    echo $form->getElement('external_link_url')->setAttribs(array(
+                        'class' => 'form-control input-md',
+                        'placeholder' => '',
+                        'id' => 'external_link_url',
+                    ));
+                    ?>
 
                                 <span class="help-block">min 3 max 255 characters</span>  
                             </div>
                             <div class="col-md-4">
-                                <?php if ($form->getElement('external_link_url')->hasErrors()) { ?>
+                    <?php if ($form->getElement('external_link_url')->hasErrors()) { ?>
                                     <div class="has-error">
-                                        <?php foreach ($form->getElement('external_link_url')->getMessages() as $message) { ?>
+                                    <?php foreach ($form->getElement('external_link_url')->getMessages() as $message) { ?>
                                             <p class="help-block"><?php echo $this->escape($message); ?></p>
                                         <?php } ?>
                                     </div>
-                                <?php } ?>
+                                    <?php } ?>
                             </div>
                         </div>
-                        
-                        
-                        
-                        
+
+
+
+
                         <div class="form-group">
                             <label class="col-md-2 control-label" for="index_slide_photo">Photo</label>
                             <div class="col-md-4">  
                                 <input type="file" name="index_slide_photo" id="index_slide_photo" class="form-control input-md">
                             </div>                            
                             <div class="col-md-4">
-                                <?php if ($form->getElement("index_slide_photo")->hasErrors()) { ?>
+                    <?php if ($form->getElement("index_slide_photo")->hasErrors()) { ?>
                                     <div class="has-error">
-                                        <?php foreach ($form->getElement("index_slide_photo")->getMessages() as $message) { ?>
+                                    <?php foreach ($form->getElement("index_slide_photo")->getMessages() as $message) { ?>
                                             <p class="help-block"><?php echo $this->escape($message); ?></p>
                                         <?php } ?>
                                     </div>
-                                <?php } ?>
+                                    <?php } ?>
                             </div>
                         </div>
                         <!-- Button (Double) -->
                         <div class="form-group">
                             <label class="col-md-2 control-label" for="new_indexSlide_cancel"></label>
                             <div class="col-md-4 text-right">
-                                <a href="<?php echo $this->url(array('controller'=>'admin-indexSlides', 'action'=>'index'), 'default', true); ?>" id="new_indexSlide_cancel" name="new_indexSlide_cancel" class="btn btn-default">Cancel</a>
+                                <a href="<?php echo $this->url(array('controller' => 'admin_indexslides', 'action' => 'index'), 'default', true); ?>" id="new_indexSlide_cancel" name="new_indexSlide_cancel" class="btn btn-default">Cancel</a>
                                 <button type="submit" id="new_indexSlide_submit" name="new_indexSlide_submit" class="btn btn-success">Save</button>
                             </div>
                         </div>
@@ -272,49 +262,50 @@ $form->setElementDecorators(array('ViewHelper'));
 
 
             </div>
-</div>
-        
-</div>
+        </div>
+
+    </div>
+   </div>  
     <script>
-    <?php $this->inlineScript()->captureStart();?>
-    
-    $('#link_type').on('change',function(e) {
-        e.stopPropagation();
-        var target = $(this).is('#link_type') ? $(this) : $(this).closest('#link_type');
-        var linkType = target.val();
-        
-        $('#link-label-container').hide();
-        $('#sitemap-page-id-container').hide();
+<?php $this->inlineScript()->captureStart(); ?>
 
-        $('#internal-link-container').hide();
+        $('#link_type').on('change', function (e) {
+            e.stopPropagation();
+            var target = $(this).is('#link_type') ? $(this) : $(this).closest('#link_type');
+            var linkType = target.val();
 
-        $('#external-link-container').hide();
-        
-        switch (linkType) {
-            
-            case 'SitemapPage':
-                $('#link-label-container').show();
-                $('#sitemap-page-id-container').show();
-                break;
-        
-            case 'InternalLink':
-                $('#link-label-container').show();
-                $('#internal-link-container').show();
-                break;
-                
-            case 'ExternalLink':
-                $('#link-label-container').show();
-                $('#external-link-container').show();
-                break;
+            $('#link-label-container').hide();
+            $('#sitemap-page-id-container').hide();
 
-        }
+            $('#internal-link-container').hide();
 
-    });
-    
-     $('#link_type').trigger('change');
-    
-            
-      <?php $this->inlineScript()->captureEnd(); ?>     
+            $('#external-link-container').hide();
+
+            switch (linkType) {
+
+                case 'SitemapPage':
+                    $('#link-label-container').show();
+                    $('#sitemap-page-id-container').show();
+                    break;
+
+                case 'InternalLink':
+                    $('#link-label-container').show();
+                    $('#internal-link-container').show();
+                    break;
+
+                case 'ExternalLink':
+                    $('#link-label-container').show();
+                    $('#external-link-container').show();
+                    break;
+
+            }
+
+        });
+
+        $('#link_type').trigger('change');
+
+
+<?php $this->inlineScript()->captureEnd(); ?>
     </script>
 
 

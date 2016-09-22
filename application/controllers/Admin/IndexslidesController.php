@@ -25,7 +25,7 @@ class Admin_IndexslidesController extends Zend_Controller_Action {
 			//'page' => 2
 		));
 
-        $this->view->indexSlides = $indexSlides; //prosledjivanje rezultata
+        $this->view->indexSlides = $indexSlides; 
         $this->view->systemMessages = $systemMessages;
     }
 
@@ -222,7 +222,6 @@ class Admin_IndexslidesController extends Zend_Controller_Action {
 
         $this->view->systemMessages = $systemMessages;
         $this->view->form = $form;
-
         $this->view->indexSlide = $indexSlide;
     }
 
