@@ -3,7 +3,7 @@ class PhotogalleriesController extends Zend_Controller_Action
 {
 	public function indexAction() {
 		
-                    //photoGalleries       
+        //photoGalleries       
         $cmsPhotoGalleriesDbTable = new Application_Model_DbTable_CmsPhotoGalleries();
         $photoGalleries = $cmsPhotoGalleriesDbTable->search(array(
                 'filters' => array(

@@ -4,7 +4,7 @@ class Application_Model_Filter_UrlSlug implements Zend_Filter_Interface
 {
     public function filter($value) {
         
-        //ovaj znak ^ znaci da se hvataju svi karaketri koji nisu navedeni i menjaju 
+        //ovaj znak ^ znaci da se hvataju svi karakteri koji nisu navedeni i menjaju 
         //p{L} oznaka za sva slova
         //p{N} oznaka za sve brojeve
         $value = preg_replace('/[^\p{L}\p{N}]/u', '-', $value);

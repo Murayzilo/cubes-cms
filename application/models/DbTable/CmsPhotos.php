@@ -15,7 +15,7 @@ class Application_Model_DbTable_CmsPhotos extends Zend_Db_Table_Abstract {
         if ($row instanceof Zend_Db_Table_Row) {
             return $row->toArray();
         } else {
-            //row not found
+            //row is not found
             return null;
         }
     }
@@ -28,7 +28,7 @@ class Application_Model_DbTable_CmsPhotos extends Zend_Db_Table_Abstract {
     }
     /**
      * 
-     * @param array $photo
+     * @param array $photo Associative array with keys as column names and values as coumn new values
      * @return int The new ID of new photo (autoincrement)
      */
     public function insertPhoto($photo) {
@@ -85,7 +85,7 @@ class Application_Model_DbTable_CmsPhotos extends Zend_Db_Table_Abstract {
     public function updatePhotoOfOrder($sortedIds) {
         foreach ($sortedIds as $orderNumber => $id) {
             $this->update(array(
-                'order_number' => $orderNumber + 1 // +1 because it starts from 0
+                'order_number' => $orderNumber + 1 // +1 because order_number starts from 1, not from 0
                     ), 'id = ' . $id);
         }
     }
