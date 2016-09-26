@@ -22,7 +22,9 @@ $this->headMeta()->appendName('description', $sitemapPage['description']);
             <div class="col-md-8">
                 <!-- About company -->
                 <div class="block">
-                    <?php echo $this->escape($sitemapPage['body']);?>
+                    
+                     <!-- Greska je $this->escape($sitemapPage['body'])!! VODI RACUNA SINE MIROSLAVE -->
+                    <?php echo $this->$sitemapPage['body'];?>     
                 </div>
 
                 <!-- The team -->
