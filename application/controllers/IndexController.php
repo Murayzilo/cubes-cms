@@ -6,7 +6,8 @@ class IndexController extends Zend_Controller_Action {
         /* Initialize action controller here */
     }
 
-    public function indexAction() {   // index slides 
+    public function indexAction() {   
+         // index slides 
         $cmsSlidesDBTable = new Application_Model_DbTable_CmsIndexSlides();
 
         $indexSlides = $cmsSlidesDBTable->search(array(
