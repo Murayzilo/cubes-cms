@@ -3,6 +3,10 @@ class Admin_ServicesController extends Zend_Controller_Action
 {
 	
 	public function indexAction() {
+            // izbor jezika
+        $translate = Zend_Registry::get('Zend_Translate');
+        $translate->setLocale('sr');
+            
         $flashMessenger = $this->getHelper('FlashMessenger');
         $systemMessages = array(
             'success' => $flashMessenger->getMessages('success'),

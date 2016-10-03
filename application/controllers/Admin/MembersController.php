@@ -13,8 +13,13 @@ class Admin_MembersController extends Zend_Controller_Action {
 
         //prikaz svih member-a
         $cmsMembersDbTable = new Application_Model_DbTable_CmsMembers();
-
- 	$members = $cmsMembersDbTable->search(array(
+        
+        
+        $cache = Zend_Registry::get('mycache');
+        $members = $cache->load('members');
+        
+        if (!$members) {
+             	$members = $cmsMembersDbTable->search(array(
 			//'filters' => array(
 			//	'status' => Application_Model_DbTable_CmsMembers::STATUS_ENABLED
 			//),
@@ -24,6 +29,12 @@ class Admin_MembersController extends Zend_Controller_Action {
 			//'limit' => 4,
 			//'page' => 2
 		));
+                
+                $cache->save($members,'members');
+        }
+        
+
+
 
         $this->view->members = $members; //prosledjivanje rezultata
         $this->view->systemMessages = $systemMessages;

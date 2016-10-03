@@ -143,4 +143,9 @@ $user = Zend_Auth::getInstance()->getIdentity();
 
 </body>
 
+<?php
+	$this->addScriptPath(APPLICATION_PATH . '/views/scripts');
+	echo $this->render('admin/util/profiler.phtml');
+?>
+
 </html>
