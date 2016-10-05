@@ -10,9 +10,13 @@ class ContactController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        
         // action body
-         $request = $this->getRequest();
+        $request = $this->getRequest();
         $flashMessenger = $this->getHelper('FlashMessenger');
+       
+        
+        
         $form = new Application_Form_Frontend_Contact();
         $systemMessages = 'init';
         if ($request->isPost() && $request->getPost('task') === 'contact') {
@@ -39,7 +43,8 @@ class ContactController extends Zend_Controller_Action
                     $systemMessages = 'Success';
                 }
             } catch (Application_Model_Exception_InvalidInput $ex) {
-                $systemMessages['errors'][] = $ex->getMessage();
+               // $systemMessages['errors'][] = $ex->getMessage();
+                $systemMessages = 'Error';
             }
         }
         $this->view->systemMessages = $systemMessages;

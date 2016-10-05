@@ -48,7 +48,8 @@ $systemMessages = $this->systemMessages;
                                     'class' => 'form-control input-md',
                                     'placeholder' => 'enter your email',
                                     'id' => 'email',
-                                    'required' => 'required'
+                                    'required' => 'required',
+                                    'type' => 'email'
                                 ));
                                 ?>
                                 <?php if ($form->getElement('email')->hasErrors()) { ?>
@@ -87,7 +88,7 @@ $systemMessages = $this->systemMessages;
                             echo "An error occurred while sending the message. ";
                         }
                         if ($systemMessages == "Success") {
-                            echo "Message sent successfully ! ";
+                            echo "Message has been sent. ";
                         }
                     }
                     ?>
